@@ -22,12 +22,40 @@ const Circle = styled(Box)`
   border-radius: 50px;
 `
 
+const Btn = styled.button`
+  color: white;
+  background-color: tomato;
+  border: 0;
+  border-radius: 15px;
+`
+
+/**
+ * styled component에서는 스타일을 적용할 tag의 attr도 설정할 수 있다.
+ * 그럼 해당 component들을 사용할 때, attr을 일일이 명시할 필요가 없어진다.
+ */
+const Input = styled.input.attrs({
+  required: true,
+  maxLength: 10,
+})`
+  background-color: Aquamarine;
+  border: 0;
+`
+
 function App() {
   return (
-    <Father>
-      <Box bgColor="teal" />
-      <Box bgColor="tomato" />
-      <Circle bgColor="red" />
+    <Father as="header">
+      <Btn>Login</Btn>
+      {/**
+       * styled component를 extend하지 않고 style은 유지한 채 적용 tag만 바꾸고 싶을 때는 as props를 사용한다.
+       * 아래에서 props로 전달하는 값은 styled. 뒤에 위치할 유효한 HTML tag이다.
+       */}
+      <Btn as="a">Login</Btn>
+      <Input />
+      <Input />
+      <Input />
+      <Input />
+      <Input />
+      <Input />
     </Father>
   )
 }
