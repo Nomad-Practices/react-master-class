@@ -1,8 +1,16 @@
 import styled, { keyframes } from 'styled-components'
 
+/**
+ * props를 통해서 전달된 theme 정보를 아래로 같이 적용할 수 있다.
+ */
+const Title = styled.h1`
+  color: ${(props) => props.theme.textColor};
+`
+
 const Wrapper = styled.div`
   display: flex;
   margin-bottom: 200px;
+  background-color: ${(props) => props.theme.backgroundColor};
 `
 
 /**
