@@ -18,7 +18,7 @@ const Wrapper = styled.div`
  * 컴포넌트 간의 스타일 중복을 방지할 수 있다.
  */
 const Box = styled.div`
-  background-color: ${(props) => props.bgColor};
+  background-color: 'green';
   width: 100px;
   height: 100px;
 `
