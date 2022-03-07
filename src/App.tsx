@@ -1,7 +1,12 @@
 import Circle from './components/Circle'
 
 function App() {
-  return <Circle />
+  return (
+    <>
+      <Circle bgColor="teal" />
+      <Circle bgColor="tomato" />
+    </>
+  )
 }
 
 export default App
