@@ -3,8 +3,8 @@ import Circle from './components/Circle'
 function App() {
   return (
     <>
-      <Circle bgColor="teal" />
-      <Circle bgColor="tomato" />
+      <Circle bgColor="teal" text="Hello world" />
+      <Circle bgColor="tomato" borderColor="blue" />
     </>
   )
 }
