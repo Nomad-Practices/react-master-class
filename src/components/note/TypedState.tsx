@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 
 /**
@@ -38,6 +39,8 @@ const Container = styled.div<IContainerProps>`
  * => 함수의 parameter는 가급적이면 interface를 사용할 수 있는 객체로 전달하는 것이 나을 것 같다.
  */
 function Circle({ bgColor, borderColor, text = '' }: ICircleProps) {
+  // useState hook은 알고보니 generic 함수였다.
+  const [counter, setCounter] = useState<number>(0)
   return (
     <Container bgColor={bgColor} borderColor={borderColor ?? 'black'}>
       {text}
