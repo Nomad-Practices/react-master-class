@@ -1,6 +1,7 @@
 import { useParams, useLocation } from 'react-router-dom'
 import { Container, Header, Loader, Title } from '../components/styled/common'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 interface ILocationState {
   name: string
@@ -9,6 +10,27 @@ interface ILocationState {
 function Detail() {
   const { coinId } = useParams()
   const [loading, setLoading] = useState(true)
+  const [info, setInfo] = useState({})
+  const [price, setPrice] = useState({})
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const { data: infoData } = await axios({
+          baseURL: 'https://api.coinpaprika.com/v1',
+          url: `/coins/${coinId}`,
+          method: 'get',
+        })
+        const { data: priceData } = await axios({
+          baseURL: 'https://api.coinpaprika.com/v1',
+          url: `/tickers/${coinId}`,
+        })
+        setInfo(infoData)
+        setPrice(priceData)
+      } catch (e) {
+        console.error(e)
+      }
+    })()
+  }, [])
   /**
    * useLocation hook으로 현재 페이지의 Location 객체에 접근할 수 있고 여기서 Link의 state props를 확인할 수 있다.
    *
