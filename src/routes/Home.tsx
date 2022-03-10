@@ -1,45 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 import axios from 'axios'
+import { Container, Header, Loader, Title } from '../components/styled/common'
+import { CoinList, Coin, Image } from '../components/styled/home'
 
-const Container = styled.div`
-  padding: 0px, 20px;
-  max-width: 480px;
-  margin: 0 auto;
-`
-const Header = styled.header`
-  height: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0px;
-`
-const CoinList = styled.ul``
-const Coin = styled.li`
-  background-color: white;
-  color: ${(props) => props.theme.bgColor};
-  margin: 0px 5px 10px 5px;
-  border-radius: 15px;
-  a {
-    padding: 20px;
-    transition: color 0.2s ease-in;
-    display: block;
-  }
-  &:hover {
-    a {
-      color: ${(props) => props.theme.accentColor};
-    }
-  }
-`
-const Title = styled.h1`
-  color: ${(props) => props.theme.accentColor};
-  font-size: 48px;
-`
-const Loader = styled.span`
-  text-align: center;
-  display: block;
-`
 interface ICoin {
   id: string
   name: string
@@ -79,7 +43,15 @@ function Home() {
         ) : (
           coins.map((c) => (
             <Coin key={c.id}>
-              <Link to={`/${c.id}`}>{c.name} &rarr;</Link>
+              {/**
+               * react-router-dom의 Link 컴포넌트를 통해 다른 url로 navigate될 때, 목적지 페이지의 Location 객체로 state라는 props를 보낼 수 있습니다.
+               */}
+              <Link to={`/${c.id}`} state={{ name: c.name }}>
+                <Image
+                  src={`https://cryptoicon-api.vercel.app/api/icon/${c.symbol.toLowerCase()}`}
+                />
+                {c.name} &rarr;
+              </Link>
             </Coin>
           ))
         )}
