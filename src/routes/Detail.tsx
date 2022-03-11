@@ -1,9 +1,17 @@
-import { useParams, useLocation, Routes, Route, Outlet } from 'react-router-dom'
+import {
+   useParams,
+   useLocation,
+   Outlet,
+   Link,
+   useMatch,
+} from 'react-router-dom'
 import { Container, Header, Loader, Title } from '../components/styled/common'
 import {
    Overview,
    OverviewItem,
    Description,
+   Tab,
+   Tabs,
 } from '../components/styled/detail'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -98,7 +106,10 @@ function Detail() {
     * state를 사용하되 optional property 또는 destructuring default value를 설정하여 default state props나 state property를  만들도록 하자~
     */
    const { state } = useLocation()
-
+   const priceMatch = useMatch('/:coinId/price')
+   const chartMatch = useMatch('/:coinId/chart')
+   console.log(priceMatch)
+   console.log(chartMatch)
    return (
       <Container>
          <Header>
@@ -143,6 +154,14 @@ function Detail() {
                {/**
                 * nested route에서 child component가 렌더링될 위치는 react-router-dom의 Outlet 컴포넌트로 표시하면 된다.
                 */}
+               <Tabs>
+                  <Tab isActive={chartMatch !== null}>
+                     <Link to={`/${coinId}/chart`}>Chart</Link>
+                  </Tab>
+                  <Tab isActive={priceMatch !== null}>
+                     <Link to={`/${coinId}/price`}>Price</Link>
+                  </Tab>
+               </Tabs>
                <Outlet />
             </>
          )}
