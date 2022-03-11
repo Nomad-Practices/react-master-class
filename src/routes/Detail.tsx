@@ -13,90 +13,27 @@ import {
    Tab,
    Tabs,
 } from '../components/styled/detail'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useQuery } from 'react-query'
+import { getInfoById, getPriceById } from '../utils/api'
 
 interface ILocationState {
    name: string
 }
-interface IInfo {
-   id: string
-   name: string
-   symbol: string
-   rank: number
-   is_new: boolean
-   is_active: boolean
-   type: string
-   description: string
-   message: string
-   open_source: boolean
-   started_at: string
-   development_status: string
-   hardware_wallet: boolean
-   proof_type: string
-   org_structure: string
-   hash_algorithm: string
-   first_data_at: string
-   last_data_at: string
-}
-interface IPrice {
-   id: string
-   name: string
-   symbol: string
-   rank: number
-   circulating_supply: number
-   total_supply: number
-   max_supply: number
-   beta_value: number
-   first_data_at: string
-   last_updated: string
-   quotes: {
-      USD: {
-         ath_date: string
-         ath_price: number
-         market_cap: number
-         market_cap_change_24h: number
-         percent_change_1h: number
-         percent_change_1y: number
-         percent_change_6h: number
-         percent_change_7d: number
-         percent_change_12h: number
-         percent_change_15m: number
-         percent_change_24h: number
-         percent_change_30d: number
-         percent_change_30m: number
-         percent_from_price_ath: number
-         price: number
-         volume_24h: number
-         volume_24h_change_24h: number
-      }
-   }
-}
+
 function Detail() {
    const { coinId } = useParams()
-   const [loading, setLoading] = useState(true)
-   const [info, setInfo] = useState<IInfo>()
-   const [priceInfo, setPrice] = useState<IPrice>()
-   useEffect(() => {
-      ;(async () => {
-         try {
-            const { data: infoData } = await axios({
-               baseURL: 'https://api.coinpaprika.com/v1',
-               url: `/coins/${coinId}`,
-               method: 'get',
-            })
-            const { data: priceData } = await axios({
-               baseURL: 'https://api.coinpaprika.com/v1',
-               url: `/tickers/${coinId}`,
-            })
-            setInfo(infoData)
-            setPrice(priceData)
-            setLoading(false)
-         } catch (e) {
-            console.error(e)
-         }
-      })()
-   }, [coinId])
+   /**
+    * useQuery 내부 queryFn에 위치하는 함수는 가급적이면 아래와 같은 형식으로 적자
+    * queryFn의 인자인 QueryFnContext가 뭔지 찾아보다가 시간 다 날렸다...
+    */
+   const { isLoading: isInfoLoading, data: info } = useQuery(
+      ['coins', coinId],
+      () => getInfoById(coinId!)
+   )
+   const { isLoading: isPriceLoading, data: price } = useQuery(
+      ['tickers', coinId],
+      () => getPriceById(coinId!)
+   )
    /**
     * useLocation hook으로 현재 페이지의 Location 객체에 접근할 수 있고 여기서 Link의 state props를 확인할 수 있다.
     *
@@ -108,19 +45,21 @@ function Detail() {
    const { state } = useLocation()
    const priceMatch = useMatch('/:coinId/price')
    const chartMatch = useMatch('/:coinId/chart')
-   console.log(priceMatch)
-   console.log(chartMatch)
+   const isLoading = isInfoLoading || isPriceLoading
+
    return (
       <Container>
          <Header>
             <Title>
-               {loading
-                  ? 'Loading...'
-                  : (state as ILocationState)?.name ?? info?.name}
+               {isLoading ? (
+                  <Loader>Loading...</Loader>
+               ) : (
+                  (state as ILocationState)?.name ?? info?.name
+               )}
             </Title>
          </Header>
-         {loading ? (
-            'Loading...'
+         {isLoading ? (
+            <Loader>Loading...</Loader>
          ) : (
             <>
                {/**
@@ -144,11 +83,11 @@ function Detail() {
                <Overview>
                   <OverviewItem>
                      <span>Total Suply:</span>
-                     <span>{priceInfo?.total_supply}</span>
+                     <span>{price?.total_supply}</span>
                   </OverviewItem>
                   <OverviewItem>
                      <span>Max Supply:</span>
-                     <span>{priceInfo?.max_supply}</span>
+                     <span>{price?.max_supply}</span>
                   </OverviewItem>
                </Overview>
                {/**
