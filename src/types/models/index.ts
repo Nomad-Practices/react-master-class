@@ -1,3 +1,5 @@
+type Nullable<T> = T | null
+
 export interface ICoin {
    id: string
    name: string
@@ -61,4 +63,19 @@ export interface IPrice {
          volume_24h_change_24h: number
       }
    }
+}
+
+export interface IOutletCtxt {
+   coinId: string
+}
+
+export interface IHistory {
+   time_open: string
+   time_close: string
+   open: number
+   high: number
+   low: number
+   close: number
+   volume: number
+   market_cap: number
 }

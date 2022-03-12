@@ -24,7 +24,8 @@ function Detail() {
    const { coinId } = useParams()
    /**
     * useQuery 내부 queryFn에 위치하는 함수는 가급적이면 아래와 같은 형식으로 적자
-    * queryFn의 인자인 QueryFnContext가 뭔지 찾아보다가 시간 다 날렸다...
+    * 또한 query별 caching을 수행하기 위해서는 queryId는 겹치면 안된다.
+    * 특이하게도 react query에서 queryId는 하나의 string 또는 string[]이라는 점 잊지말자~
     */
    const { isLoading: isInfoLoading, data: info } = useQuery(
       ['coins', coinId],
@@ -101,7 +102,7 @@ function Detail() {
                      <Link to={`/${coinId}/price`}>Price</Link>
                   </Tab>
                </Tabs>
-               <Outlet />
+               <Outlet context={{ coinId }} />
             </>
          )}
       </Container>
