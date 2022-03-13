@@ -33,7 +33,10 @@ function Detail() {
    )
    const { isLoading: isPriceLoading, data: price } = useQuery(
       ['tickers', coinId],
-      () => getPriceById(coinId!)
+      () => getPriceById(coinId!),
+      {
+         refetchInterval: 5000,
+      }
    )
    /**
     * useLocation hook으로 현재 페이지의 Location 객체에 접근할 수 있고 여기서 Link의 state props를 확인할 수 있다.
@@ -76,8 +79,8 @@ function Detail() {
                      <span>${info?.symbol}</span>
                   </OverviewItem>
                   <OverviewItem>
-                     <span>Open Source:</span>
-                     <span>{info?.open_source ? 'Yes' : 'No'}</span>
+                     <span>Price:</span>
+                     <span>${price?.quotes.USD.price.toFixed(3)}</span>
                   </OverviewItem>
                </Overview>
                <Description>{info?.description}</Description>

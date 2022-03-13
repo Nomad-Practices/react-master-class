@@ -6,8 +6,12 @@ import ApexChart, { Props } from 'react-apexcharts'
 
 function Chart() {
    const { coinId } = useOutletContext<IOutletCtxt>()
-   const { isLoading, data: history } = useQuery(['history', coinId], () =>
-      getHistoryById(coinId)
+   const { isLoading, data: history } = useQuery(
+      ['history', coinId],
+      () => getHistoryById(coinId),
+      {
+         refetchInterval: 10000,
+      }
    )
    const ApexChartProps: Props = {
       options: {
