@@ -92,7 +92,7 @@ function Detail() {
                   </OverviewItem>
                   <OverviewItem>
                      <span>Price:</span>
-                     <span>${price?.quotes.USD.price.toFixed(3)}</span>
+                     <span>${price?.quotes?.USD?.price?.toFixed(3)}</span>
                   </OverviewItem>
                </Overview>
                <Description>{info?.description}</Description>
