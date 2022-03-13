@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { theme } from './theme'
+import { HelmetProvider } from 'react-helmet-async'
 
 const queryClient = new QueryClient()
 
@@ -18,7 +19,9 @@ ReactDOM.render(
           * 여기서 주의할 점은, 적용할 theme의 Object는 동일한 interface를 가져야 한다는 것~
           */}
          <ThemeProvider theme={theme}>
-            <App />
+            <HelmetProvider>
+               <App />
+            </HelmetProvider>
          </ThemeProvider>
          <ReactQueryDevtools initialIsOpen={true} />
       </QueryClientProvider>

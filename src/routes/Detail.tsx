@@ -15,6 +15,7 @@ import {
 } from '../components/styled/detail'
 import { useQuery } from 'react-query'
 import { getInfoById, getPriceById } from '../utils/api'
+import { Helmet } from 'react-helmet-async'
 
 interface ILocationState {
    name: string
@@ -47,12 +48,23 @@ function Detail() {
     * state를 사용하되 optional property 또는 destructuring default value를 설정하여 default state props나 state property를  만들도록 하자~
     */
    const { state } = useLocation()
+   /**
+    * useMatch hook은 현재 route가 특정 route pattern을 만족하는지 여부를 확인한다.
+    * 만일 일치하지 않는다면 null을 반환한다.
+    */
    const priceMatch = useMatch('/:coinId/price')
    const chartMatch = useMatch('/:coinId/chart')
    const isLoading = isInfoLoading || isPriceLoading
 
    return (
       <Container>
+         {/**
+          * React-Helmet을 사용하면 document head에 작성할 html tag들을 바로 전달할 수 있다.
+          * 그래서 title뿐만 아니라 favicon, css도 컴포넌트 단에서 지정할 수 있다.
+          */}
+         <Helmet>
+            <title>{(state as ILocationState)?.name ?? info?.name}</title>
+         </Helmet>
          <Header>
             <Title>
                {isLoading ? (

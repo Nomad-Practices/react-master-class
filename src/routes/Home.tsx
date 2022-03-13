@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import { Container, Header, Loader, Title } from '../components/styled/common'
 import { CoinList, Coin, Image } from '../components/styled/home'
 import { getAllCoins } from '../utils/api'
+import { Helmet } from 'react-helmet-async'
 
 function Home() {
    /**
@@ -13,6 +14,9 @@ function Home() {
    const MAX_COINS_COUNT = 100
    return (
       <Container>
+         <Helmet>
+            <title>All Coins~</title>
+         </Helmet>
          <Header>
             <Title>All Coins</Title>
          </Header>
