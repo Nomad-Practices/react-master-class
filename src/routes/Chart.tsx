@@ -3,8 +3,11 @@ import { useOutletContext } from 'react-router-dom'
 import { IOutletCtxt } from '../types/models'
 import { getHistoryById } from '../utils/api'
 import ApexChart, { Props } from 'react-apexcharts'
+import { useRecoilValue } from 'recoil'
+import { isDarkAtom } from '../atoms'
 
 function Chart() {
+   const isDark = useRecoilValue(isDarkAtom)
    const { coinId } = useOutletContext<IOutletCtxt>()
    const { isLoading, data: history } = useQuery(
       ['history', coinId],
@@ -39,7 +42,7 @@ function Chart() {
             colors: ['#1A73E8', '#B32824'],
          },
          theme: {
-            mode: 'dark',
+            mode: isDark ? 'dark' : 'light',
          },
          tooltip: {
             y: {
