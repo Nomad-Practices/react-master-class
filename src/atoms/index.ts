@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-
+import { ITodo } from '../types/models'
 /**
  * Recoil은 React 앱의 global state management 라이브러리이다.
  * state management는 여러 컴포넌트들이 공유할 state(global state)와 state manipulation 함수들을 일일이 여러 단계의 props를 거쳐서 전달하는 번거로움을 해결할 수 있다
@@ -11,6 +11,11 @@ import { atom } from 'recoil'
  * current state와 setter를 동시에 받고 싶으면 useRecoiState hook을 사용하면 된다.
  */
 export const isDarkAtom = atom({
-   key: 'isDark',
-   default: true,
+  key: 'isDark',
+  default: true,
+})
+
+export const toDoState = atom<ITodo[]>({
+  key: 'todo',
+  default: [],
 })
