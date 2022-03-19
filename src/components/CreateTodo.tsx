@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
-import { useSetRecoilState } from 'recoil'
-import { toDoState } from '../atoms'
-import { ECate } from '../types/models'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { categoryState, toDoState } from '../atoms'
 
 // form 내부 input 이름들
 interface IFormInputs {
@@ -11,16 +10,14 @@ interface IFormInputs {
 function CreateTodo() {
   const { register, handleSubmit, setValue } = useForm<IFormInputs>()
   const setState = useSetRecoilState(toDoState)
+  const category = useRecoilValue(categoryState)
 
-  function handleValid(data: IFormInputs) {
-    setState((prev) => [
-      ...prev,
-      { id: Date.now(), text: data.todo, category: ECate['TODO'] },
-    ])
+  function onValid(data: IFormInputs) {
+    setState((prev) => [...prev, { id: Date.now(), text: data.todo, category }])
     setValue('todo', '')
   }
   return (
-    <form onSubmit={handleSubmit(handleValid)}>
+    <form onSubmit={handleSubmit(onValid)}>
       <input
         {...register('todo', { required: 'Please Write todo' })}
         type="text"

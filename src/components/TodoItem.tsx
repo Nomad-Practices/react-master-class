@@ -10,7 +10,7 @@ function TodoItem({ id, text, category }: ITodo) {
     )
   }
   return (
-    <li key={id}>
+    <li>
       <span>{text}</span>
       {category !== 'TODO' && (
         <button onClick={() => onClick(ECate['TODO'])}>Todo</button>
