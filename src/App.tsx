@@ -6,13 +6,24 @@ function App() {
       <DragDropContext onDragEnd={onDragEnd}>
          <div>
             <Droppable droppableId="one">
-               {() => (
-                  <ul>
+               {(provided) => (
+                  /**
+                   * provided.droppableProps -> Drop을 할 영역에 전달할 props
+                   */
+                  <ul ref={provided.innerRef} {...provided.droppableProps}>
                      <Draggable draggableId="first" index={0}>
-                        {() => <li>hello</li>}
-                     </Draggable>
-                     <Draggable draggableId="second" index={1}>
-                        {() => <li>world</li>}
+                        {(provided) => (
+                           /**
+                            * provided.draggableProps -> Drag를 적용할 영역에 전달할 props
+                            */
+                           <li
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                           >
+                              <span {...provided.dragHandleProps}>🏎</span>
+                              hello
+                           </li>
+                        )}
                      </Draggable>
                   </ul>
                )}
