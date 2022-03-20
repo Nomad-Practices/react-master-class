@@ -1,34 +1,24 @@
-import { useRecoilState } from 'recoil'
-import { minutesState, hourSelector } from './atoms'
-import React from 'react'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 function App() {
-   const [minutes, setMinutes] = useRecoilState(minutesState)
-   /**
-    * useRecoilState(selector)에서 첫번째 배열요소는 selector.get의 반환값이고 두번째 배열요소는 selector.set을 호출하는 함수이다!!!
-    */
-   const [hours, setHours] = useRecoilState(hourSelector)
-   function onMinutesChange(event: React.FormEvent<HTMLInputElement>) {
-      setMinutes(+event.currentTarget.value)
-   }
-   function onHoursChange(event: React.FormEvent<HTMLInputElement>) {
-      setHours(+event.currentTarget.value)
-   }
+   function onDragEnd() {}
    return (
-      <div>
-         <input
-            type="number"
-            placeholder="Minutes"
-            value={minutes}
-            onChange={onMinutesChange}
-         />
-         <input
-            type="number"
-            placeholder="Hours"
-            value={hours}
-            onChange={onHoursChange}
-         />
-      </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+         <div>
+            <Droppable droppableId="one">
+               {() => (
+                  <ul>
+                     <Draggable draggableId="first" index={0}>
+                        {() => <li>hello</li>}
+                     </Draggable>
+                     <Draggable draggableId="second" index={1}>
+                        {() => <li>world</li>}
+                     </Draggable>
+                  </ul>
+               )}
+            </Droppable>
+         </div>
+      </DragDropContext>
    )
 }
 
