@@ -7,7 +7,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import { ThemeProvider } from 'styled-components'
 import { RecoilRoot } from 'recoil'
 import { darkTheme, lightTheme } from './theme'
-import Router from './Router'
+// import Router from './Router'
 import { GlobalStyle } from './components/styled/common'
 
 const queryClient = new QueryClient()
@@ -19,7 +19,6 @@ ReactDOM.render(
             <HelmetProvider>
                <ThemeProvider theme={darkTheme}>
                   <GlobalStyle />
-                  <Router />
                   <App />
                </ThemeProvider>
             </HelmetProvider>

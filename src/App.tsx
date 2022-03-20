@@ -1,23 +1,22 @@
-import Router from './Router'
-import { ThemeProvider } from 'styled-components'
-import { GlobalStyle } from './components/styled/common'
-import { darkTheme, lightTheme } from './theme'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
-import { isDarkAtom } from './atoms'
+import { useSetRecoilState, useRecoilValue } from 'recoil'
+import { minutesState, hourSelector } from './atoms'
+import React from 'react'
 
 function App() {
-   const [isDark, setIsdark] = useRecoilState(isDarkAtom)
-   function toggleTheme() {
-      setIsdark((prev) => !prev)
+   const setMinutes = useSetRecoilState(minutesState)
+   const hours = useRecoilValue(hourSelector)
+   function onMinutesChange(event: React.FormEvent<HTMLInputElement>) {
+      setMinutes(+event.currentTarget.value)
    }
    return (
-      <>
-         <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-            <button onClick={toggleTheme}>Toggle Mode</button>
-            <GlobalStyle />
-            <Router />
-         </ThemeProvider>
-      </>
+      <div>
+         <input
+            type="number"
+            placeholder="Minutes"
+            onChange={onMinutesChange}
+         />
+         <input type="number" placeholder="Hours" value={hours} readOnly />
+      </div>
    )
 }
 
