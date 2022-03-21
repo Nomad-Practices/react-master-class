@@ -1,9 +1,24 @@
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import {
+   DragDropContext,
+   Droppable,
+   Draggable,
+   DropResult,
+} from 'react-beautiful-dnd'
+import { useRecoilState } from 'recoil'
+import { toDoState } from './atoms'
 import { Board, Boards, Card, Wrapper } from './components/styled'
+import { cloneDeep } from 'lodash-es'
 
 function App() {
-   function onDragEnd() {}
-   const todos = ['a', 'b', 'c', 'd', 'e', 'f']
+   function onDragEnd({ draggableId, destination, source }: DropResult) {
+      setTodos((prev) => {
+         const next = cloneDeep(prev)
+         next.splice(source.index, 1)
+         next.splice(destination?.index ?? source.index, 0, draggableId)
+         return next
+      })
+   }
+   const [todos, setTodos] = useRecoilState(toDoState)
    return (
       <DragDropContext onDragEnd={onDragEnd}>
          <Wrapper>
@@ -18,7 +33,7 @@ function App() {
                         {...provided.droppableProps}
                      >
                         {todos.map((t, i) => (
-                           <Draggable draggableId={t} index={i}>
+                           <Draggable draggableId={t} index={i} key={t}>
                               {(provided) => (
                                  /**
                                   * provided.draggableProps -> Drag를 적용할 영역에 전달할 props

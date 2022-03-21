@@ -19,3 +19,8 @@ export const hourSelector = selector<number>({
       set(minutesState, (newVal as number) * 60)
    },
 })
+
+export const toDoState = atom({
+   key: 'todo',
+   default: ['a', 'b', 'c', 'd', 'e', 'f'],
+})
