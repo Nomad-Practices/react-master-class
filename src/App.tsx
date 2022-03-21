@@ -1,13 +1,9 @@
-import {
-   DragDropContext,
-   Droppable,
-   Draggable,
-   DropResult,
-} from 'react-beautiful-dnd'
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd'
 import { useRecoilState } from 'recoil'
 import { toDoState } from './atoms'
-import { Board, Boards, Card, Wrapper } from './components/styled'
+import { Board, Boards, Wrapper } from './components/styled'
 import { cloneDeep } from 'lodash-es'
+import DraggableCard from './components/DraggableCard'
 
 function App() {
    function onDragEnd({ draggableId, destination, source }: DropResult) {
@@ -33,20 +29,7 @@ function App() {
                         {...provided.droppableProps}
                      >
                         {todos.map((t, i) => (
-                           <Draggable draggableId={t} index={i} key={t}>
-                              {(provided) => (
-                                 /**
-                                  * provided.draggableProps -> Drag를 적용할 영역에 전달할 props
-                                  */
-                                 <Card
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                 >
-                                    {t}
-                                 </Card>
-                              )}
-                           </Draggable>
+                           <DraggableCard draggableId={t} index={i} key={t} />
                         ))}
                         {/**
                          * provided placeholder를 사용하면 Draggable이 원래 위치에서 벗어나도 Droppable의 height는 유지된다.
