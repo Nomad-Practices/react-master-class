@@ -68,23 +68,33 @@ a {
 }
 `
 
-export const Container = styled.div`
-   padding: 0px, 20px;
-   max-width: 480px;
-   margin: 0 auto;
-`
-export const Header = styled.header`
-   height: 10vh;
+export const Wrapper = styled.div`
    display: flex;
+   max-width: 480px;
+   width: 100%;
+   margin: 0 auto;
    justify-content: center;
    align-items: center;
-   margin: 20px 0px;
+   height: 100vh;
 `
-export const Loader = styled.span`
-   text-align: center;
-   display: block;
+
+export const Boards = styled.div`
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   width: 100%;
 `
-export const Title = styled.h1`
-   color: ${(props) => props.theme.accentColor};
-   font-size: 48px;
+
+export const Board = styled.div`
+   padding: 20px 10px;
+   padding-top: 30px;
+   background-color: ${(props) => props.theme.boardColor};
+   border-radius: 5px;
+   min-height: 200px;
+`
+
+export const Card = styled.div`
+   background-color: ${(props) => props.theme.cardColor};
+   border-radius: 5px;
+   padding: 10px 10px;
+   margin-bottom: 5px;
 `

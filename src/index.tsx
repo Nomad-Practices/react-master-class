@@ -6,9 +6,9 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { HelmetProvider } from 'react-helmet-async'
 import { ThemeProvider } from 'styled-components'
 import { RecoilRoot } from 'recoil'
-import { darkTheme, lightTheme } from './theme'
+import { theme } from './theme'
 // import Router from './Router'
-import { GlobalStyle } from './components/styled/common'
+import { GlobalStyle } from './components/styled'
 
 const queryClient = new QueryClient()
 
@@ -17,7 +17,7 @@ ReactDOM.render(
       <RecoilRoot>
          <QueryClientProvider client={queryClient}>
             <HelmetProvider>
-               <ThemeProvider theme={darkTheme}>
+               <ThemeProvider theme={theme}>
                   <GlobalStyle />
                   <App />
                </ThemeProvider>
