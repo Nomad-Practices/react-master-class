@@ -1,4 +1,4 @@
-import { atom, selector, useRecoilValue } from 'recoil'
+import { atom, selector } from 'recoil'
 
 export const minutesState = atom({
    key: 'minutes',
@@ -20,7 +20,11 @@ export const hourSelector = selector<number>({
    },
 })
 
-export const toDoState = atom({
+export const toDoState = atom<Record<string, string[]>>({
    key: 'todo',
-   default: ['a', 'b', 'c', 'd', 'e', 'f'],
+   default: {
+      to_do: ['a', 'b'],
+      doing: ['c', 'd'],
+      done: ['e', 'f'],
+   },
 })

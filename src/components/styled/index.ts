@@ -70,7 +70,7 @@ a {
 
 export const Wrapper = styled.div`
    display: flex;
-   max-width: 480px;
+   max-width: 780px;
    width: 100%;
    margin: 0 auto;
    justify-content: center;
@@ -82,14 +82,16 @@ export const Boards = styled.div`
    display: grid;
    grid-template-columns: repeat(3, 1fr);
    width: 100%;
+   gap: 10px;
 `
 
 export const Board = styled.div`
+   width: 300px;
    padding: 20px 10px;
-   padding-top: 30px;
+   padding-top: 10px;
    background-color: ${(props) => props.theme.boardColor};
    border-radius: 5px;
-   min-height: 200px;
+   min-height: 300px;
 `
 
 export const Card = styled.div`
@@ -97,4 +99,11 @@ export const Card = styled.div`
    border-radius: 5px;
    padding: 10px 10px;
    margin-bottom: 5px;
+`
+
+export const Title = styled.h2`
+   text-align: center;
+   font-weight: 600;
+   margin-bottom: 10px;
+   font-size: 18px;
 `

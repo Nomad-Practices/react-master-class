@@ -1,43 +1,30 @@
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd'
+import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 import { useRecoilState } from 'recoil'
 import { toDoState } from './atoms'
-import { Board, Boards, Wrapper } from './components/styled'
+import { Boards, Wrapper } from './components/styled'
 import { cloneDeep } from 'lodash-es'
-import DraggableCard from './components/DraggableCard'
+import DroppableBoard from './components/DroppableBoard'
 
 function App() {
+   const [state, setState] = useRecoilState(toDoState)
    function onDragEnd({ draggableId, destination, source }: DropResult) {
-      setTodos((prev) => {
+      setState((prev) => {
          const next = cloneDeep(prev)
-         next.splice(source.index, 1)
-         next.splice(destination?.index ?? source.index, 0, draggableId)
+         const destId = destination?.droppableId ?? source.droppableId
+         const destPos = destination?.index ?? source.index
+
+         next[source.droppableId].splice(source.index, 1)
+         next[destId].splice(destPos, 0, draggableId)
          return next
       })
    }
-   const [todos, setTodos] = useRecoilState(toDoState)
    return (
       <DragDropContext onDragEnd={onDragEnd}>
          <Wrapper>
             <Boards>
-               <Droppable droppableId="one">
-                  {(provided) => (
-                     /**
-                      * provided.droppableProps -> Drop을 할 영역에 전달할 props
-                      */
-                     <Board
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                     >
-                        {todos.map((t, i) => (
-                           <DraggableCard draggableId={t} index={i} key={t} />
-                        ))}
-                        {/**
-                         * provided placeholder를 사용하면 Draggable이 원래 위치에서 벗어나도 Droppable의 height는 유지된다.
-                         */}
-                        {provided.placeholder}
-                     </Board>
-                  )}
-               </Droppable>
+               {Object.keys(state).map((k) => (
+                  <DroppableBoard key={k} todos={state[k]} droppableId={k} />
+               ))}
             </Boards>
          </Wrapper>
          <Boards></Boards>

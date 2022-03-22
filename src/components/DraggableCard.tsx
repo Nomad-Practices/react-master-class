@@ -2,14 +2,14 @@ import { Draggable } from 'react-beautiful-dnd'
 import { Card } from '../components/styled'
 import React from 'react'
 
-interface IDraggableCardProps {
+interface IProps {
    draggableId: string
    index: number
 }
 
-function DraggableCard({ draggableId, index }: IDraggableCardProps) {
+function DraggableCard({ draggableId, index }: IProps) {
    return (
-      <Draggable draggableId={draggableId} index={index} key={draggableId}>
+      <Draggable draggableId={draggableId} index={index}>
          {(provided) => (
             /**
              * provided.draggableProps -> Drag를 적용할 영역에 전달할 props
