@@ -1,3 +1,4 @@
+import { DroppableStateSnapshot } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components'
 
@@ -92,6 +93,8 @@ export const Board = styled.div`
    background-color: ${(props) => props.theme.boardColor};
    border-radius: 5px;
    min-height: 300px;
+   display: flex;
+   flex-direction: column;
 `
 
 export const Card = styled.div`
@@ -106,4 +109,17 @@ export const Title = styled.h2`
    font-weight: 600;
    margin-bottom: 10px;
    font-size: 18px;
+`
+
+export const Area = styled.div<
+   Pick<DroppableStateSnapshot, 'isDraggingOver' | 'draggingFromThisWith'>
+>`
+   background-color: ${(props) =>
+      props.isDraggingOver
+         ? 'pink'
+         : props.draggingFromThisWith
+         ? 'blue'
+         : 'green'};
+   flex-grow: 1;
+   transition: background-color 0.3s ease-in-out;
 `

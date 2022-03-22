@@ -1,5 +1,5 @@
 import { Droppable } from 'react-beautiful-dnd'
-import { Board, Title } from '../components/styled'
+import { Area, Board, Title } from '../components/styled'
 import DraggableCard from '../components/DraggableCard'
 
 interface IProps {
@@ -12,11 +12,16 @@ function DroppableBoard({ todos, droppableId }: IProps) {
       <Board>
          <Title>{droppableId}</Title>
          <Droppable droppableId={droppableId}>
-            {(provided) => (
+            {(provided, { isDraggingOver, draggingFromThisWith }) => (
                /**
                 * provided.droppableProps -> Drop을 할 영역에 전달할 props
                 */
-               <div ref={provided.innerRef} {...provided.droppableProps}>
+               <Area
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  isDraggingOver={isDraggingOver}
+                  draggingFromThisWith={draggingFromThisWith}
+               >
                   {todos.map((t, i) => (
                      <DraggableCard draggableId={t} index={i} key={t} />
                   ))}
@@ -24,7 +29,7 @@ function DroppableBoard({ todos, droppableId }: IProps) {
                    * provided placeholder를 사용하면 Draggable이 원래 위치에서 벗어나도 Droppable의 height는 유지된다.
                    */}
                   {provided.placeholder}
-               </div>
+               </Area>
             )}
          </Droppable>
       </Board>
