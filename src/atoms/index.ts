@@ -20,11 +20,16 @@ export const hourSelector = selector<number>({
    },
 })
 
-export const toDoState = atom<Record<string, string[]>>({
+export interface ITodo {
+   id: number
+   text: string
+}
+
+export const toDoState = atom<Record<string, ITodo[]>>({
    key: 'todo',
    default: {
-      to_do: ['a', 'b'],
-      doing: ['c', 'd'],
-      done: ['e', 'f'],
+      to_do: [],
+      doing: [],
+      done: [],
    },
 })

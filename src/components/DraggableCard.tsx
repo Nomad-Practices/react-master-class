@@ -3,13 +3,14 @@ import { Card } from '../components/styled'
 import React from 'react'
 
 interface IProps {
-   draggableId: string
+   draggableId: number
+   draggableText: string
    index: number
 }
 
-function DraggableCard({ draggableId, index }: IProps) {
+function DraggableCard({ draggableId, draggableText, index }: IProps) {
    return (
-      <Draggable draggableId={draggableId} index={index}>
+      <Draggable draggableId={draggableId + ''} index={index}>
          {(provided, snapshot) => (
             /**
              * provided.draggableProps -> Drag를 적용할 영역에 전달할 props
@@ -20,7 +21,7 @@ function DraggableCard({ draggableId, index }: IProps) {
                {...provided.draggableProps}
                {...provided.dragHandleProps}
             >
-               {draggableId}
+               {draggableText}
             </Card>
          )}
       </Draggable>

@@ -129,3 +129,10 @@ export const Area = styled.div<
    transition: background-color 0.3s ease-in-out;
    padding: 20px;
 `
+
+export const Form = styled.form`
+   width: 100%;
+   input {
+      width: 100%;
+   }
+`

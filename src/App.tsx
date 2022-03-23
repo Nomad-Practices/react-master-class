@@ -13,7 +13,7 @@ function App() {
          const destId = destination?.droppableId ?? source.droppableId
          const destPos = destination?.index ?? source.index
 
-         next[source.droppableId].splice(source.index, 1)
+         const [draggedItem] = next[source.droppableId].splice(source.index, 1)
          next[destId].splice(destPos, 0, draggableId)
          return next
       })
