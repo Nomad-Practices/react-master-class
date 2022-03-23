@@ -10,11 +10,12 @@ interface IProps {
 function DraggableCard({ draggableId, index }: IProps) {
    return (
       <Draggable draggableId={draggableId} index={index}>
-         {(provided) => (
+         {(provided, snapshot) => (
             /**
              * provided.draggableProps -> Drag를 적용할 영역에 전달할 props
              */
             <Card
+               isDragging={snapshot.isDragging}
                ref={provided.innerRef}
                {...provided.draggableProps}
                {...provided.dragHandleProps}

@@ -1,4 +1,7 @@
-import { DroppableStateSnapshot } from 'react-beautiful-dnd'
+import {
+   DroppableStateSnapshot,
+   DraggableStateSnapshot,
+} from 'react-beautiful-dnd'
 import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components'
 
@@ -88,7 +91,6 @@ export const Boards = styled.div`
 
 export const Board = styled.div`
    width: 300px;
-   padding: 20px 10px;
    padding-top: 10px;
    background-color: ${(props) => props.theme.boardColor};
    border-radius: 5px;
@@ -97,11 +99,14 @@ export const Board = styled.div`
    flex-direction: column;
 `
 
-export const Card = styled.div`
-   background-color: ${(props) => props.theme.cardColor};
+export const Card = styled.div<Pick<DraggableStateSnapshot, 'isDragging'>>`
+   background-color: ${(props) =>
+      props.isDragging ? 'tomato' : props.theme.cardColor};
    border-radius: 5px;
    padding: 10px 10px;
    margin-bottom: 5px;
+   box-shadow: ${(props) =>
+      props.isDragging ? '0px 2px 5px rgba(0,0,0,0.1)' : 'none'};
 `
 
 export const Title = styled.h2`
@@ -122,4 +127,5 @@ export const Area = styled.div<
          : 'green'};
    flex-grow: 1;
    transition: background-color 0.3s ease-in-out;
+   padding: 20px;
 `
