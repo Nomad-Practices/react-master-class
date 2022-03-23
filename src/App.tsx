@@ -7,14 +7,14 @@ import DroppableBoard from './components/DroppableBoard'
 
 function App() {
    const [state, setState] = useRecoilState(toDoState)
-   function onDragEnd({ draggableId, destination, source }: DropResult) {
+   function onDragEnd({ destination, source }: DropResult) {
       setState((prev) => {
          const next = cloneDeep(prev)
          const destId = destination?.droppableId ?? source.droppableId
          const destPos = destination?.index ?? source.index
 
          const [draggedItem] = next[source.droppableId].splice(source.index, 1)
-         next[destId].splice(destPos, 0, draggableId)
+         next[destId].splice(destPos, 0, draggedItem)
          return next
       })
    }

@@ -2,8 +2,10 @@ import { Droppable } from 'react-beautiful-dnd'
 import { Area, Board, Title, Form } from '../components/styled'
 import DraggableCard from '../components/DraggableCard'
 import { useForm } from 'react-hook-form'
-import { useRef } from 'react'
-import { ITodo } from '../atoms'
+// import { useRef } from 'react'
+import { ITodo, toDoState } from '../atoms'
+import { useSetRecoilState } from 'recoil'
+import { cloneDeep } from 'lodash-es'
 
 interface IProps {
    todos: ITodo[]
@@ -24,7 +26,14 @@ function DroppableBoard({ todos, droppableId }: IProps) {
    //    setTimeout(() => inputRef.current?.blur(), 5000)
    // }
    const { register, setValue, handleSubmit } = useForm<IForm>()
+   const setTodoState = useSetRecoilState(toDoState)
    function onValid({ todo }: IForm) {
+      setTodoState((prev) => {
+         const next = cloneDeep(prev)
+
+         next[droppableId].push({ id: Date.now(), text: todo })
+         return next
+      })
       setValue('todo', '')
    }
    return (
