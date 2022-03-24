@@ -58,33 +58,26 @@ table {
 body {
 font-weight: 300;
   font-family: 'Quicksand', sans-serif; 
-  background-color:  ${(props) => props.theme.bgColor};
-  color: ${(props) => props.theme.textColor};
+  color: 'black';
   line-height: 1.2;
+  background:linear-gradient(135deg,#e09,#d0e);
 }
 a {
   text-decoration: none;
   color: inherit;
 }
 `
-
-export const Container = styled.div`
-   padding: 0px, 20px;
-   max-width: 480px;
-   margin: 0 auto;
-`
-export const Header = styled.header`
-   height: 10vh;
+export const Wrapper = styled.div`
+   height: 100vh;
+   width: 100vw;
    display: flex;
    justify-content: center;
    align-items: center;
-   margin: 20px 0px;
 `
-export const Loader = styled.span`
-   text-align: center;
-   display: block;
-`
-export const Title = styled.h1`
-   color: ${(props) => props.theme.accentColor};
-   font-size: 48px;
+export const Box = styled.div`
+   width: 200px;
+   height: 200px;
+   background-color: white;
+   border-radius: 10px;
+   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `

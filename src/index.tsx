@@ -5,6 +5,9 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { HelmetProvider } from 'react-helmet-async'
 import { RecoilRoot } from 'recoil'
+import { ThemeProvider } from 'styled-components'
+import { theme } from './theme'
+import { GlobalStyle } from './components/styled'
 
 const queryClient = new QueryClient()
 
@@ -13,7 +16,10 @@ ReactDOM.render(
       <RecoilRoot>
          <QueryClientProvider client={queryClient}>
             <HelmetProvider>
-               <App />
+               <ThemeProvider theme={theme}>
+                  <App />
+                  <GlobalStyle />
+               </ThemeProvider>
             </HelmetProvider>
             <ReactQueryDevtools initialIsOpen={true} />
          </QueryClientProvider>
