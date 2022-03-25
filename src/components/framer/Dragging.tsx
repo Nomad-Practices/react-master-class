@@ -25,17 +25,30 @@ const boxVariants: Variants = {
       scale: 1,
       borderRadius: '100px',
    },
+   drag: {
+      // color 값을 rgb나 rgba로 전달해야 color transition이 부여된다!!
+      backgroundColor: 'rgb(253, 203, 110)',
+      transition: {
+         duration: 10,
+      },
+   },
 }
 
-function Gestures() {
+function Dragging() {
    return (
       <Wrapper>
          {/**
-          * motion이 적용된 컴포넌트가 mouse event를 감지할 때는 while~ 시작하는 gesture props를 전달하면 된다.
+          * motion 컴포넌트에 drag를 활성화할 때는 drag라는 props만 전달하면 끝난다~
           */}
-         <Box variants={boxVariants} whileHover="hover" whileTap="tap" />
+         <Box
+            drag
+            variants={boxVariants}
+            whileHover="hover"
+            whileTap="tap"
+            whileDrag="drag"
+         />
       </Wrapper>
    )
 }
 
-export default Gestures
+export default Dragging
