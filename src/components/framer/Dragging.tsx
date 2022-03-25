@@ -57,6 +57,8 @@ function Dragging() {
              * drag 이후 원래 위치로 돌아오게 만들려면 dragSnapToOrigin props를 전달하면 된다.
              *
              * dragArea 바깥까지 얼마나 이동할 수 있을지 설정하는 것은 dropElastic에 0 ~ 1 수를 주면된다.
+             *
+             * drag props에 'x', 'y'를 전달하면 x축, y축 방향으로만 drag할 수 있다.
              */}
             <Box
                drag
