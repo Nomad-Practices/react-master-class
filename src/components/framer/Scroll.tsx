@@ -1,9 +1,14 @@
-import { motion, useMotionValue, useTransform } from 'framer-motion'
+import {
+   motion,
+   useMotionValue,
+   useTransform,
+   useViewportScroll,
+} from 'framer-motion'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled(motion.div)`
-   height: 100vh;
+   height: 200vh;
    width: 100vw;
    display: flex;
    justify-content: center;
@@ -32,6 +37,8 @@ function Scroll() {
     *
     * 특정 inputRange에 값이 존재하는 motionValue를 전혀 다른 outputRange에 있는 값으로 변환시킬 때는 useTransformation hook을 사용한다.
     * 여기서 inpuRange의 길이와 outputRange의 길이는 같아야 한다.
+    *
+    * viewPort scroll과 관련된 motionValue는 useViewportScroll hook을 사용한다.
     */
    const x = useMotionValue(0)
    const rotateZ = useTransform(x, [-800, 800], [-360, 360])
@@ -43,13 +50,16 @@ function Scroll() {
          'linear-gradient(135deg, rgb(6, 82, 221), rgb(18, 203, 196))',
       ]
    )
+   const { scrollYProgress } = useViewportScroll()
+   const scale = useTransform(scrollYProgress, [0, 1], [1, 5])
    useEffect(() => {
-      // x.onChange(() => console.log(x.get()))
-      // x.onChange(() => console.log(scale.get()))
-   }, [x])
+      scrollYProgress.onChange(() =>
+         console.log(scrollYProgress.get(), scrollYProgress.get())
+      )
+   }, [scrollYProgress])
    return (
       <Wrapper style={{ background }}>
-         <Box drag="x" dragSnapToOrigin style={{ x, rotateZ }} />
+         <Box drag="x" dragSnapToOrigin style={{ x, rotateZ, scale }} />
       </Wrapper>
    )
 }
