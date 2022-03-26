@@ -2,12 +2,13 @@ import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
    height: 100vh;
    width: 100vw;
    display: flex;
    justify-content: center;
    align-items: center;
+   background: linear-gradient(135deg, rgb(255, 221, 89), rgb(255, 63, 52));
 `
 const Box = styled(motion.div)`
    width: 100px;
@@ -33,14 +34,22 @@ function Scroll() {
     * 여기서 inpuRange의 길이와 outputRange의 길이는 같아야 한다.
     */
    const x = useMotionValue(0)
-   const scale = useTransform(x, [-800, 0, 800], [2, 1, 0.1])
+   const rotateZ = useTransform(x, [-800, 800], [-360, 360])
+   const background = useTransform(
+      x,
+      [-800, 800],
+      [
+         'linear-gradient(135deg, rgb(253, 167, 223), rgb(181, 52, 113)',
+         'linear-gradient(135deg, rgb(6, 82, 221), rgb(18, 203, 196))',
+      ]
+   )
    useEffect(() => {
       // x.onChange(() => console.log(x.get()))
       // x.onChange(() => console.log(scale.get()))
    }, [x])
    return (
-      <Wrapper>
-         <Box drag="x" dragSnapToOrigin style={{ x, scale }} />
+      <Wrapper style={{ background }}>
+         <Box drag="x" dragSnapToOrigin style={{ x, rotateZ }} />
       </Wrapper>
    )
 }
