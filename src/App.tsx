@@ -8,6 +8,7 @@ import Disappear from './components/framer/Disappear'
 import Slider from './components/framer/Slider'
 import Layout from './components/framer/Layout'
 import SharedLayout from './components/framer/SharedLayout'
+import FourCards from './components/framer/FourCards'
 
 function App() {
    return (
@@ -21,7 +22,8 @@ function App() {
          {/* <Disappear /> */}
          {/* <Slider /> */}
          {/* <Layout /> */}
-         <SharedLayout />
+         {/* <SharedLayout /> */}
+         <FourCards />
       </>
    )
 }
