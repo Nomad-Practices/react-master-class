@@ -5,6 +5,7 @@ import Vvariants from './components/framer/Variants'
 import Scroll from './components/framer/Scroll'
 import Path from './components/framer/Path'
 import Disappear from './components/framer/Disappear'
+import Slider from './components/framer/Slider'
 
 function App() {
    return (
@@ -15,7 +16,8 @@ function App() {
          {/* <Dragging /> */}
          {/* <Scroll /> */}
          {/* <Path /> */}
-         <Disappear />
+         {/* <Disappear /> */}
+         <Slider />
       </>
    )
 }
