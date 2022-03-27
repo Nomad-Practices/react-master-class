@@ -6,6 +6,8 @@ import Scroll from './components/framer/Scroll'
 import Path from './components/framer/Path'
 import Disappear from './components/framer/Disappear'
 import Slider from './components/framer/Slider'
+import Layout from './components/framer/Layout'
+import SharedLayout from './components/framer/SharedLayout'
 
 function App() {
    return (
@@ -17,7 +19,9 @@ function App() {
          {/* <Scroll /> */}
          {/* <Path /> */}
          {/* <Disappear /> */}
-         <Slider />
+         {/* <Slider /> */}
+         {/* <Layout /> */}
+         <SharedLayout />
       </>
    )
 }
