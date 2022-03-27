@@ -53,29 +53,30 @@ const overlayVariants: Variants = {
 }
 
 function FourCards() {
-   const [clicked, setClicked] = useState(false)
-   function toggle() {
-      setClicked((prev) => !prev)
-   }
+   const [id, setId] = useState<null | string>(null)
    return (
-      <Wrapper onClick={toggle}>
+      <Wrapper>
          <Grid>
-            <Box layoutId="hello" />
-            <Box />
-            <Box />
-            <Box />
+            {[1, 2, 3, 4].map((n) => (
+               <Box
+                  key={n}
+                  layoutId={`box-${n}`}
+                  onClick={() => setId(`box-${n}`)}
+               />
+            ))}
          </Grid>
          <AnimatePresence>
-            {clicked && (
+            {id && (
                <Overlay
                   variants={overlayVariants}
                   initial="initial"
                   animate="animate"
                   exit="exit"
+                  onClick={() => setId(null)}
                >
                   <Box
                      style={{ width: '400px', height: '200px' }}
-                     layoutId="hello"
+                     layoutId={id}
                   />
                </Overlay>
             )}
