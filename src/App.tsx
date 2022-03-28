@@ -2,16 +2,17 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './routes/Home'
 import Tv from './routes/Tv'
 import Search from './routes/Search'
-import Header from './components/Header'
+import GlobalLayout from './layout/GlobalLayout'
 
 function App() {
   return (
     <Router>
-      <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/tv" element={<Tv />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/" element={<GlobalLayout />}>
+          <Route path="" element={<Home />} />
+          <Route path="tv" element={<Tv />} />
+          <Route path="search" element={<Search />} />
+        </Route>
       </Routes>
     </Router>
   )
