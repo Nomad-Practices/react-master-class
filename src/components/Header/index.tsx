@@ -1,74 +1,13 @@
-import styled from 'styled-components'
-import { AnimatePresence, motion, Variants } from 'framer-motion'
+import { Nav, Col, Logo, Items, Item, Search, Circle, Input } from './styled'
+import {
+  motion,
+  Variants,
+  useAnimation,
+  useViewportScroll,
+} from 'framer-motion'
 import { Link, useMatch } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const Nav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  background-color: black;
-  font-size: 17px;
-  padding: 20px 60px;
-  color: white;
-`
-const Col = styled.div`
-  display: flex;
-  align-items: center;
-`
-const Logo = styled(motion.svg)`
-  margin-right: 50px;
-  width: 95px;
-  height: 25px;
-  fill: ${(props) => props.theme.red};
-  path {
-    stroke-width: 6px;
-    stroke: white;
-  }
-`
-const Items = styled.ul`
-  display: flex;
-  align-items: center;
-`
-const Item = styled.li`
-  margin-right: 20px;
-  color: ${(props) => props.theme.white.darker};
-  transition: color 0.3s ease-in-out;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  &:hover {
-    color: ${(props) => props.theme.white.lighter};
-  }
-`
-const Search = styled.span`
-  color: white;
-  display: flex;
-  align-items: center;
-  svg {
-    height: 25px;
-  }
-`
-const Circle = styled(motion.span)`
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background-color: ${(props) => props.theme.red};
-  border-radius: 2.5px;
-  bottom: -7px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-`
-const Input = styled(motion.input)`
-  width: 200px;
-  transform-origin: right center;
-  left: -200px;
-`
 const logoVar: Variants = {
   initial: {
     fillOpacity: 1,
@@ -80,26 +19,38 @@ const logoVar: Variants = {
     },
   },
 }
-const inputVar: Variants = {
+const navVar: Variants = {
   initial: {
-    scaleX: 0,
-  },
-  animate: {
-    scaleX: 1,
-  },
-  exit: {
-    scaleX: 0,
+    backgroundColor: 'rgba(0,0,0,0)',
   },
 }
 function Header() {
   const homeMatch = useMatch('/')
   const tvMatch = useMatch('/tv')
   const [showSearch, setShowSearch] = useState(false)
+  const { scrollY } = useViewportScroll()
+  /**
+   * 코드 상에서 motion animation을 원하는 때에 실행하도록 제어(시작, 종료, 구독)할 때는 useAnimation hook을 사용한다.
+   * 특정 조건에 여러 animation을 실행할 때 굉장히 유용하다.
+   * useAnimation hook의 반환값은 motion 컴포넌트의 animate props로 전달하면 된다.
+   */
+  const inputAnimation = useAnimation()
+  const navAnimation = useAnimation()
   function onClick() {
+    inputAnimation.start({
+      scaleX: showSearch ? 0 : 1,
+    })
     setShowSearch((prev) => !prev)
   }
+  useEffect(() => {
+    scrollY.onChange(() => {
+      navAnimation.start({
+        backgroundColor: `rgba(0,0,0,${scrollY.get() > 80 ? 1 : 0})`,
+      })
+    })
+  }, [])
   return (
-    <Nav>
+    <Nav variants={navVar} initial="initial" animate={navAnimation}>
       <Col>
         <Logo
           variants={logoVar}
@@ -124,8 +75,11 @@ function Header() {
         </Items>
       </Col>
       <Col>
-        <Search onClick={onClick}>
+        <Search>
           <motion.svg
+            onClick={onClick}
+            animate={{ x: showSearch ? -185 : 0 }}
+            transition={{ type: 'linear' }}
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -136,17 +90,12 @@ function Header() {
               clipRule="evenodd"
             ></path>
           </motion.svg>
-          <AnimatePresence>
-            {showSearch && (
-              <Input
-                variants={inputVar}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                placeholder="Search for movie or tv show"
-              />
-            )}
-          </AnimatePresence>
+          <Input
+            animate={inputAnimation}
+            initial={{ scaleX: 0 }}
+            transition={{ type: 'linear' }}
+            placeholder="Search for movie or tv show..."
+          />
         </Search>
       </Col>
     </Nav>
