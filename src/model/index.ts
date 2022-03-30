@@ -1,7 +1,7 @@
 type Nullable<T> = T | null
 
 interface IResult {
-  poster: Nullable<string>
+  poster_path: Nullable<string>
   adult: boolean
   overview: string
   release_date: string
