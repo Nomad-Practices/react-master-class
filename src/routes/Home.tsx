@@ -59,6 +59,18 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
     transform-origin: center right;
   }
 `
+const Info = styled(motion.div)`
+  padding: 10px;
+  background-color: ${(props) => props.theme.black.lighter};
+  opacity: 0;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  h4 {
+    text-align: center;
+    font-size: 18px;
+  }
+`
 const rowVar: Variants = {
   initial: {
     x: window.outerWidth + 5,
@@ -77,6 +89,16 @@ const boxVar: Variants = {
   whileHover: {
     scale: 1.3,
     y: -50,
+    transition: {
+      type: 'tween',
+      delay: 0.5,
+      duration: 0.3,
+    },
+  },
+}
+const infoVar: Variants = {
+  whileHover: {
+    opacity: 1,
     transition: {
       type: 'tween',
       delay: 0.5,
@@ -138,7 +160,17 @@ function Home() {
                     initial="initial"
                     whileHover="whileHover"
                     transition={{ type: 'tween' }}
-                  />
+                  >
+                    {/**
+                     * 부모 motion 컴포넌트에서 전달한 variants는 자식 motion 컴포넌트로 상속되기 때문에
+                     * 자식 컴포넌트에서 따로 지정할 animation은 동일한 interface를 가진 variants로 전달해야 한다.
+                     * 즉, 이미 아래 컴포넌트에는 아래와 같이 초기화된 상태라고 볼 수 있다.
+                     * <Info variants={infoVar} initial="initial" whileHover="whileHover"/>
+                     */}
+                    <Info variants={infoVar}>
+                      <h4>{t.title}</h4>
+                    </Info>
+                  </Box>
                 ))}
               </Row>
             </AnimatePresence>
