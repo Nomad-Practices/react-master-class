@@ -42,7 +42,7 @@ export const Item = styled.li`
     color: ${(props) => props.theme.white.lighter};
   }
 `
-export const Search = styled.span`
+export const Search = styled.form`
   color: white;
   display: flex;
   align-items: center;

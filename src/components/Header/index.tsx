@@ -5,8 +5,13 @@ import {
   useAnimation,
   useViewportScroll,
 } from 'framer-motion'
-import { Link, useMatch } from 'react-router-dom'
+import { Link, useMatch, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+
+interface IForm {
+  keyword: string
+}
 
 const logoVar: Variants = {
   initial: {
@@ -30,6 +35,10 @@ function Header() {
   const [showSearch, setShowSearch] = useState(false)
   const { scrollY } = useViewportScroll()
   /**
+   * 코드 상에서 동적으로 url push, replace로 이동할 때는 react-router-dom의 useNavigate를 사용하면 된다~~
+   */
+  const navigate = useNavigate()
+  /**
    * 코드 상에서 motion animation을 원하는 때에 실행하도록 제어(시작, 종료, 구독)할 때는 useAnimation hook을 사용한다.
    * 특정 조건에 여러 animation을 실행할 때 굉장히 유용하다.
    * useAnimation hook의 반환값은 motion 컴포넌트의 animate props로 전달하면 된다.
@@ -49,6 +58,10 @@ function Header() {
       })
     })
   }, [])
+  const { register, handleSubmit } = useForm<IForm>()
+  function onValid(data: IForm) {
+    navigate(`/search?keyword=${data.keyword}`)
+  }
   return (
     <Nav variants={navVar} initial="initial" animate={navAnimation}>
       <Col>
@@ -75,7 +88,7 @@ function Header() {
         </Items>
       </Col>
       <Col>
-        <Search>
+        <Search onSubmit={handleSubmit(onValid)}>
           <motion.svg
             onClick={onClick}
             animate={{ x: showSearch ? -185 : 0 }}
@@ -91,6 +104,7 @@ function Header() {
             ></path>
           </motion.svg>
           <Input
+            {...register('keyword', { required: true, minLength: 2 })}
             animate={inputAnimation}
             initial={{ scaleX: 0 }}
             transition={{ type: 'linear' }}
