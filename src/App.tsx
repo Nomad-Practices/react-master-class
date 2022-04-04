@@ -7,7 +7,9 @@ const Father = styled.div`
 interface IBoxProps {
   bgColor?: string
 }
-
+/**
+ * template에서 전달한 props를 통해 styled 컴포넌트 configure하는 방법
+ */
 const Box = styled.div<IBoxProps>`
   background-color: ${(props) => props.bgColor ?? 'black'};
   width: 100px;
@@ -17,7 +19,12 @@ const Box = styled.div<IBoxProps>`
 const Text = styled.span`
   color: white;
 `
-
+/**
+ * 기존 styled 컴포넌트로부터 extend하는 방법
+ */
+const Circle = styled(Box)`
+  border-radius: 50px;
+`
 function App() {
   return (
     <Father>
@@ -26,6 +33,7 @@ function App() {
       <Box>
         <Text>Hello World</Text>
       </Box>
+      <Circle bgColor="yellow" />
     </Father>
   )
 }
