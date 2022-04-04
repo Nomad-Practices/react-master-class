@@ -27,7 +27,7 @@ const Circle = styled(Box)`
 `
 
 const Btn = styled.button`
-  color: white;
+  color: ${(props) => props.theme.textColor};
   background-color: tomato;
   border-radius: 15px;
 `
@@ -39,7 +39,7 @@ const Input = styled.input.attrs({
   required: true,
   maxLength: 10,
 })`
-  background-color: blue;
+  background-color: ${(props) => props.theme.backgroundColor};
 `
 
 /**

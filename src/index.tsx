@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { RecoilRoot } from 'recoil'
-import { theme } from './theme'
+import { darkTheme, lightTheme } from './theme'
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -45,10 +45,14 @@ a {
   color:inherit;
 }
 `
+
+/**
+ * styled components로 앱의 테마를 ThemeProvider로 구현할 수 있다.
+ */
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={lightTheme}>
         <App />
         <GlobalStyle />
       </ThemeProvider>
