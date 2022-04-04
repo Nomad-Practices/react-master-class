@@ -59,8 +59,13 @@ const animation = keyframes`
   }
 `
 
+const Emoji = styled.span`
+  font-size: 40px;
+`
+
 /**
- * SCSS  방식의 css selector 적용하기
+ * SCSS 방식의 css pseudo selector 적용하기
+ * styled 컴포넌트 내부에 있는 또 다른 styled 컴포넌트를 가리킬 수 있다.
  */
 const Cabinet = styled.div`
   width: 200px;
@@ -70,8 +75,7 @@ const Cabinet = styled.div`
   justify-content: center;
   align-items: center;
   animation: ${animation} 5s linear infinite;
-  span {
-    font-size: 40px;
+  ${Emoji} {
     &:hover {
       font-size: 100px;
     }
@@ -104,7 +108,7 @@ function App() {
       <Input />
       <Input />
       <Cabinet>
-        <span>😵‍💫</span>
+        <Emoji as="p">😵‍💫</Emoji>
       </Cabinet>
     </>
   )
