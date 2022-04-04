@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 const Father = styled.div`
   display: flex;
@@ -42,6 +42,45 @@ const Input = styled.input.attrs({
   background-color: blue;
 `
 
+/**
+ * CSS animation w/ keyframes
+ */
+const animation = keyframes`
+  0% {
+    transform: rotate(0deg);
+    border-radius: 0px;
+  }
+  50% {
+    border-radius: 100px;
+  }
+  100% {
+    transform: rotate(3600deg);
+    border-radius: 0px;
+  }
+`
+
+/**
+ * SCSS  방식의 css selector 적용하기
+ */
+const Cabinet = styled.div`
+  width: 200px;
+  height: 200px;
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ${animation} 5s linear infinite;
+  span {
+    font-size: 40px;
+    &:hover {
+      font-size: 100px;
+    }
+    &:active {
+      opacity: 0;
+    }
+  }
+`
+
 function App() {
   return (
     <>
@@ -64,6 +103,9 @@ function App() {
       <Input />
       <Input />
       <Input />
+      <Cabinet>
+        <span>😵‍💫</span>
+      </Cabinet>
     </>
   )
 }
