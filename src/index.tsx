@@ -6,6 +6,9 @@ import { RecoilRoot } from 'recoil'
 import Router from './Router'
 import { darkTheme, lightTheme } from './theme'
 
+/**
+ *  앱 전반에 적용할 style은 createGlobalStyle을 사용하면 된다.
+ */
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -35,11 +38,11 @@ table {
   box-sizing: border-box;
 }
 body {
-  font-weight: 300;
-  font-family: 'Source Sans Pro', sans-serif;
-  color:black;
-  line-height: 1.2;
-  
+  font-family: 'Quicksand', sans-serif;
+  font-family: 'Raleway', sans-serif;
+  background-color: ${(props) => props.theme.backgroundColor};
+  color: ${(props) => props.theme.accentColor};
+
 }
 a {
   text-decoration:none;
@@ -53,7 +56,7 @@ a {
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={darkTheme}>
         <App />
         <Router />
         <GlobalStyle />
