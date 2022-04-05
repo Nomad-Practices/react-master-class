@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { RecoilRoot } from 'recoil'
+import Router from './Router'
 import { darkTheme, lightTheme } from './theme'
 
 const GlobalStyle = createGlobalStyle`
@@ -54,6 +55,7 @@ ReactDOM.render(
     <RecoilRoot>
       <ThemeProvider theme={lightTheme}>
         <App />
+        <Router />
         <GlobalStyle />
       </ThemeProvider>
     </RecoilRoot>
