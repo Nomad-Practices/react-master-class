@@ -13,19 +13,6 @@ interface ICoinInfo {
   type: string
 }
 
-const Container = styled.div`
-  padding: 0px 20px;
-  max-width: 480px;
-  margin: 0 auto;
-`
-
-const Header = styled.header`
-  height: 15vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
 const CoinsList = styled.ul``
 
 const Coin = styled.li`
@@ -44,10 +31,6 @@ const Coin = styled.li`
     }
   }
 `
-const Title = styled.h1`
-  font-size: 48px;
-  color: ${(props) => props.theme.accentColor};
-`
 
 function Home() {
   const [coins, setCoins] = useState<ICoinInfo[]>([])
@@ -58,18 +41,19 @@ function Home() {
     })()
   }, [])
   return (
-    <Container>
-      <Header>
-        <Title>Home</Title>
-      </Header>
-      <CoinsList>
-        {coins.map((c) => (
-          <Coin key={c.id}>
-            <Link to={`/${c.id}`}>{c.name} &rarr;</Link>
-          </Coin>
-        ))}
-      </CoinsList>
-    </Container>
+    <CoinsList>
+      {coins.map((c) => (
+        <Coin key={c.id}>
+          {/**
+           * Link를 통해 navigate되었을 때 전달할 데이터는 state props로 전달할 수 있다.
+           * 하지만 Link를 클릭해야 state가 생성되기 때문에 navigation 목적지 url에 바로 접속하게 되면 state는 정의되지 않는다!!
+           */}
+          <Link to={`/${c.id}`} state={{ name: c.name }}>
+            {c.name} &rarr;
+          </Link>
+        </Coin>
+      ))}
+    </CoinsList>
   )
 }
 
