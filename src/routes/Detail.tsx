@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import {
+  Outlet,
+  useLocation,
+  useParams,
+  Link,
+  useMatch,
+} from 'react-router-dom'
 import axios from 'axios'
+import styled from 'styled-components'
 
 interface ILinkState {
   state: {
@@ -62,12 +69,58 @@ interface ICoinPrice {
     }
   }
 }
+
+const Overview = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  border-radius: 10px;
+`
+const OverviewItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  span:first-child {
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+`
+const Description = styled.p`
+  margin: 20px 0px;
+`
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 25px 0px;
+  gap: 10px;
+`
+
+const Tab = styled.span<{ isActive: boolean }>`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 7px 0px;
+  border-radius: 10px;
+  color: ${(props) =>
+    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  a {
+    display: block;
+  }
+`
+
 function Detail() {
   const { coinId } = useParams()
   const [coinDtl, setCoinDtl] = useState({} as ICoinDtl)
   const [coinPrice, setCoinPrice] = useState({} as ICoinPrice)
 
   const { state } = useLocation() as ILinkState
+  const chartMatch = useMatch('/:coinId/chart')
+  const priceMatch = useMatch('/:coinId/price')
   /**
    * state가 정의되지 않는 경우를 대비하여 nullish colescing을 사용한다.
    */
@@ -82,8 +135,45 @@ function Detail() {
       setCoinDtl(dtlInfo)
       setCoinPrice(priceInfo)
     })()
-  }, [])
-  return <h1>{state?.name ?? 'Loading...'}</h1>
+  }, [coinId])
+  return (
+    <>
+      <Overview>
+        <OverviewItem>
+          <span>Rank:</span>
+          <span>{coinDtl?.rank}</span>
+        </OverviewItem>
+        <OverviewItem>
+          <span>Symbol:</span>
+          <span>${coinDtl?.symbol}</span>
+        </OverviewItem>
+        <OverviewItem>
+          <span>Open Source:</span>
+          <span>{coinDtl?.open_source ? 'Yes' : 'No'}</span>
+        </OverviewItem>
+      </Overview>
+      <Description>{coinDtl?.description}</Description>
+      <Overview>
+        <OverviewItem>
+          <span>Total Suply:</span>
+          <span>{coinPrice?.total_supply}</span>
+        </OverviewItem>
+        <OverviewItem>
+          <span>Max Supply:</span>
+          <span>{coinPrice?.max_supply}</span>
+        </OverviewItem>
+      </Overview>
+      <Tabs>
+        <Tab isActive={!!chartMatch}>
+          <Link to={`/${coinId}/chart`}>Chart</Link>
+        </Tab>
+        <Tab isActive={!!priceMatch}>
+          <Link to={`/${coinId}/price`}>Price</Link>
+        </Tab>
+      </Tabs>
+      <Outlet />
+    </>
+  )
 }
 
 export default Detail

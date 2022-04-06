@@ -38,11 +38,12 @@ table {
   box-sizing: border-box;
 }
 body {
+  font-weight: 300;
   font-family: 'Quicksand', sans-serif;
   font-family: 'Raleway', sans-serif;
   background-color: ${(props) => props.theme.backgroundColor};
   color: ${(props) => props.theme.accentColor};
-
+  line-height: 1.2;
 }
 a {
   text-decoration:none;
