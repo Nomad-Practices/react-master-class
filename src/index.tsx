@@ -5,6 +5,10 @@ import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { RecoilRoot } from 'recoil'
 import Router from './Router'
 import { darkTheme, lightTheme } from './theme'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
+
+const queryClient = new QueryClient()
 
 /**
  *  앱 전반에 적용할 style은 createGlobalStyle을 사용하면 된다.
@@ -57,11 +61,17 @@ a {
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <ThemeProvider theme={darkTheme}>
-        <App />
-        <Router />
-        <GlobalStyle />
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={darkTheme}>
+          <App />
+          <Router />
+          <GlobalStyle />
+        </ThemeProvider>
+        {/**
+         * ReactQueryDevTools => cache에 저장된 query들과 응답 데이터를 확인할 수 있는 devTool
+         */}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')

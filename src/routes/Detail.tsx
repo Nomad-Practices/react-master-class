@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import {
   Outlet,
   useLocation,
@@ -6,8 +5,9 @@ import {
   Link,
   useMatch,
 } from 'react-router-dom'
-import axios from 'axios'
 import styled from 'styled-components'
+import { useQuery } from 'react-query'
+import { fetchCoinDtl, fetchCoinPrice } from '../api'
 
 interface ILinkState {
   state: {
@@ -115,27 +115,21 @@ const Tab = styled.span<{ isActive: boolean }>`
 
 function Detail() {
   const { coinId } = useParams()
-  const [coinDtl, setCoinDtl] = useState({} as ICoinDtl)
-  const [coinPrice, setCoinPrice] = useState({} as ICoinPrice)
-
   const { state } = useLocation() as ILinkState
   const chartMatch = useMatch('/:coinId/chart')
   const priceMatch = useMatch('/:coinId/price')
   /**
    * state가 정의되지 않는 경우를 대비하여 nullish colescing을 사용한다.
    */
-  useEffect(() => {
-    ;(async () => {
-      const { data: dtlInfo } = await axios.get(
-        `https://api.coinpaprika.com/v1/coins/${coinId}`
-      )
-      const { data: priceInfo } = await axios.get(
-        `https://api.coinpaprika.com/v1/tickers/${coinId}`
-      )
-      setCoinDtl(dtlInfo)
-      setCoinPrice(priceInfo)
-    })()
-  }, [coinId])
+  const { isLoading: isDtlLoading, data: coinDtl } = useQuery<ICoinDtl>(
+    ['coin', 'detail', coinId],
+    () => fetchCoinDtl(coinId ?? '')
+  )
+
+  const { isLoading: isPriceLoading, data: coinPrice } = useQuery<ICoinPrice>(
+    ['coin', 'price', coinId],
+    () => fetchCoinPrice(coinId ?? '')
+  )
   return (
     <>
       <Overview>
