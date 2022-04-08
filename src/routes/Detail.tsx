@@ -8,6 +8,7 @@ import {
 import styled from 'styled-components'
 import { useQuery } from 'react-query'
 import { fetchCoinDtl, fetchCoinPrice } from '../api'
+import { useOutletContext } from 'react-router-dom'
 
 interface ILinkState {
   state: {
@@ -165,9 +166,14 @@ function Detail() {
           <Link to={`/${coinId}/price`}>Price</Link>
         </Tab>
       </Tabs>
-      <Outlet />
+      <Outlet context={{ coinId }} />
     </>
   )
 }
 
 export default Detail
+
+export function useCoinId() {
+  type TContext = { coinId?: string }
+  return useOutletContext<TContext>()
+}
