@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -22,7 +22,9 @@ function GlobalLayout() {
     <>
       <Container>
         <Header>
-          <Title>Crypto Currency</Title>
+          <Link to="/">
+            <Title>Crypto Tracker</Title>
+          </Link>
         </Header>
         <Outlet />
       </Container>
