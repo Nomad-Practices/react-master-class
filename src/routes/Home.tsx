@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from 'react-query'
 import { fetchAllCoins } from '../api'
+import { Helmet } from 'react-helmet-async'
 
 interface ICoinInfo {
   id: string
@@ -45,19 +46,24 @@ function Home() {
     () => fetchAllCoins(20)
   )
   return (
-    <CoinsList>
-      {coins?.map((c) => (
-        <Coin key={c.id}>
-          {/**
-           * Link를 통해 navigate되었을 때 전달할 데이터는 state props로 전달할 수 있다.
-           * 하지만 Link를 클릭해야 state가 생성되기 때문에 navigation 목적지 url에 바로 접속하게 되면 state는 정의되지 않는다!!
-           */}
-          <Link to={`/${c.id}`} state={{ name: c.name }}>
-            {c.name} &rarr;
-          </Link>
-        </Coin>
-      ))}
-    </CoinsList>
+    <>
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
+      <CoinsList>
+        {coins?.map((c) => (
+          <Coin key={c.id}>
+            {/**
+             * Link를 통해 navigate되었을 때 전달할 데이터는 state props로 전달할 수 있다.
+             * 하지만 Link를 클릭해야 state가 생성되기 때문에 navigation 목적지 url에 바로 접속하게 되면 state는 정의되지 않는다!!
+             */}
+            <Link to={`/${c.id}`} state={{ name: c.name }}>
+              {c.name} &rarr;
+            </Link>
+          </Coin>
+        ))}
+      </CoinsList>
+    </>
   )
 }
 

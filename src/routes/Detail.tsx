@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import { useQuery } from 'react-query'
 import { fetchCoinDtl, fetchCoinPrice } from '../api'
 import { useOutletContext } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
 interface ILinkState {
   state: {
@@ -121,18 +122,28 @@ function Detail() {
   const priceMatch = useMatch('/:coinId/price')
   /**
    * state가 정의되지 않는 경우를 대비하여 nullish colescing을 사용한다.
+   * 주기적으로 백그라운드에서 실시간 데이터를 보여줄 때 유용하다.
    */
   const { isLoading: isDtlLoading, data: coinDtl } = useQuery<ICoinDtl>(
     ['coin', 'detail', coinId],
     () => fetchCoinDtl(coinId ?? '')
   )
 
+  /**
+   * useQuery 함수의 3번째 인자인 option으로 refetchInterval을 전달하면 지정한 ms마다 api를 호출한다.
+   */
   const { isLoading: isPriceLoading, data: coinPrice } = useQuery<ICoinPrice>(
     ['coin', 'price', coinId],
-    () => fetchCoinPrice(coinId ?? '')
+    () => fetchCoinPrice(coinId ?? ''),
+    {
+      refetchInterval: 5000,
+    }
   )
   return (
     <>
+      <Helmet>
+        <title>{coinDtl?.name}</title>
+      </Helmet>
       <Overview>
         <OverviewItem>
           <span>Rank:</span>
@@ -143,8 +154,8 @@ function Detail() {
           <span>${coinDtl?.symbol}</span>
         </OverviewItem>
         <OverviewItem>
-          <span>Open Source:</span>
-          <span>{coinDtl?.open_source ? 'Yes' : 'No'}</span>
+          <span>Price:</span>
+          <span>${coinPrice?.quotes.USD.price.toFixed(3)}</span>
         </OverviewItem>
       </Overview>
       <Description>{coinDtl?.description}</Description>
@@ -166,6 +177,9 @@ function Detail() {
           <Link to={`/${coinId}/price`}>Price</Link>
         </Tab>
       </Tabs>
+      {/**
+       * Outlet 위치에 rendering될 컴포넌트에 props를 전달할 때는 useOutletContext를 사용한다.
+       */}
       <Outlet context={{ coinId }} />
     </>
   )
