@@ -2,6 +2,9 @@ import { useCoinId } from '../routes/Detail'
 import { useQuery } from 'react-query'
 import { fetchOhclvHistorical } from '../api'
 import ApexChart, { Props } from 'react-apexcharts'
+import { useRecoilValue } from 'recoil'
+import { isDarkMode } from '../atoms'
+
 /**
  * Vue, React에서 데이터 시각화를 할 때는 apex-chart~!!
  */
@@ -20,6 +23,7 @@ interface IHistory {
 
 function Chart() {
   const { coinId = '' } = useCoinId()
+  const isDark = useRecoilValue(isDarkMode)
   const { isLoading, data = [] } = useQuery<IHistory[]>(
     ['coin', 'detail', coinId, 'chart'],
     () => fetchOhclvHistorical(coinId),
@@ -27,58 +31,47 @@ function Chart() {
       refetchInterval: 10000,
     }
   )
+
   const chartProps: Props = {
-    type: 'line',
+    type: 'candlestick',
+    width: 600,
     series: [
-      { name: 'close', data: isLoading ? [] : data.map((d) => d.close) },
+      {
+        name: 'candle',
+        data: isLoading
+          ? []
+          : data.map((d) => ({
+              x: d.time_open,
+              y: [
+                d.open?.toFixed(2),
+                d.high?.toFixed(2),
+                d.low?.toFixed(2),
+                d.close?.toFixed(2),
+              ],
+            })),
+      },
     ],
     options: {
       theme: {
-        mode: 'dark',
+        mode: isDark ? 'dark' : 'light',
       },
-      stroke: {
-        curve: 'smooth',
-        width: 3,
-      },
-      chart: {
-        toolbar: {
-          show: false,
-        },
-        background: 'transparent',
-      },
-      grid: {
-        show: false,
+      tooltip: {
+        enabled: true,
       },
       xaxis: {
-        labels: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
         type: 'datetime',
-        categories: data.map((d) => d.time_close),
       },
       yaxis: {
         show: false,
       },
-      fill: {
-        type: 'gradient',
-        gradient: {
-          gradientToColors: ['blue'],
-          stops: [0, 100],
+      chart: {
+        background: 'transparent',
+        toolbar: {
+          show: false,
         },
       },
-      colors: ['red'],
-      tooltip: {
-        y: {
-          formatter(value) {
-            return `$${value.toFixed(2)}`
-          },
-        },
+      grid: {
+        show: false,
       },
     },
   }

@@ -1,5 +1,8 @@
-import { createGlobalStyle } from 'styled-components'
+import { darkTheme, lightTheme } from './theme'
+import { useRecoilValue } from 'recoil'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import Router from './Router'
+import { isDarkMode } from './atoms'
 
 /**
  *  앱 전반에 적용할 style은 createGlobalStyle을 사용하면 된다.
@@ -47,11 +50,13 @@ a {
 `
 
 function App() {
+  const isDark = useRecoilValue(isDarkMode)
+
   return (
-    <>
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <Router />
       <GlobalStyle />
-    </>
+    </ThemeProvider>
   )
 }
 

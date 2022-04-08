@@ -20,7 +20,7 @@ export async function fetchCoinPrice(coinId: string) {
 
 export async function fetchOhclvHistorical(coinId: string) {
   const end = Math.floor(Date.now() / 1000)
-  const start = end - WEEK_TO_SECONDS * 2
+  const start = end - WEEK_TO_SECONDS * 8
   const { data } = await axios.get(
     `${BASE_URL}/coins/${coinId}/ohlcv/historical`,
     {

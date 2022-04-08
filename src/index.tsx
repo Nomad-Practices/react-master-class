@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import { ThemeProvider } from 'styled-components'
 import { RecoilRoot } from 'recoil'
-import { darkTheme, lightTheme } from './theme'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { HelmetProvider } from 'react-helmet-async'
@@ -22,9 +20,7 @@ ReactDOM.render(
     <HelmetProvider>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={darkTheme}>
-            <App />
-          </ThemeProvider>
+          <App />
           {/**
            * ReactQueryDevTools => cache에 저장된 query들과 응답 데이터를 확인할 수 있는 devTool
            */}
