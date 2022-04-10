@@ -2,6 +2,7 @@ import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { darkTheme, lightTheme } from './theme'
 import { isDarkAtom } from './atoms'
 import { useRecoilValue } from 'recoil'
+import TodoList from './components/TodoList'
 
 /**
  *  앱 전반에 적용할 style은 createGlobalStyle을 사용하면 된다.
@@ -56,6 +57,7 @@ function App() {
   const isDark = useRecoilValue(isDarkAtom)
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      <TodoList />
       <GlobalStyle />
     </ThemeProvider>
   )
