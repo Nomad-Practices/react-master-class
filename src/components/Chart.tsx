@@ -2,6 +2,8 @@ import { useCoinId } from '../routes/Detail'
 import { useQuery } from 'react-query'
 import { fetchOhclvHistorical } from '../api'
 import ApexChart, { Props } from 'react-apexcharts'
+import { isDarkAtom } from '../atoms'
+import { useRecoilValue } from 'recoil'
 /**
  * Vue, React에서 데이터 시각화를 할 때는 apex-chart~!!
  */
@@ -19,6 +21,7 @@ interface IHistory {
 }
 
 function Chart() {
+  const isDark = useRecoilValue(isDarkAtom)
   const { coinId = '' } = useCoinId()
   const { isLoading, data = [] } = useQuery<IHistory[]>(
     ['coin', 'detail', coinId, 'chart'],
@@ -34,7 +37,7 @@ function Chart() {
     ],
     options: {
       theme: {
-        mode: 'dark',
+        mode: isDark ? 'dark' : 'light',
       },
       stroke: {
         curve: 'smooth',
