@@ -1,4 +1,3 @@
-import Router from './Router'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { darkTheme, lightTheme } from './theme'
 import { isDarkAtom } from './atoms'
@@ -57,7 +56,6 @@ function App() {
   const isDark = useRecoilValue(isDarkAtom)
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <Router />
       <GlobalStyle />
     </ThemeProvider>
   )

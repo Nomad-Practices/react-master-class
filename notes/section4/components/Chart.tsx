@@ -2,7 +2,7 @@ import { useCoinId } from '../routes/Detail'
 import { useQuery } from 'react-query'
 import { fetchOhclvHistorical } from '../api'
 import ApexChart, { Props } from 'react-apexcharts'
-import { isDarkAtom } from '../atoms'
+import { isDarkAtom } from '../../../src/atoms'
 import { useRecoilValue } from 'recoil'
 /**
  * Vue, React에서 데이터 시각화를 할 때는 apex-chart~!!
