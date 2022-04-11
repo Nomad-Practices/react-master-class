@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 
-interface ITodo {
+export interface ITodo {
   id: number
   text: string
   status: 'TODO' | 'DOING' | 'DONE'
