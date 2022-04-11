@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useSetRecoilState } from 'recoil'
-import { todoStateAtom } from '../atoms'
+import { EStatus, todoStateAtom } from '../atoms'
 
 interface IForm {
   todo: string
@@ -12,7 +12,7 @@ function CreateTodo() {
   function onValid({ todo }: IForm) {
     setTodoState((prev) => [
       ...prev,
-      { id: Date.now(), text: todo, status: 'TODO' },
+      { id: Date.now(), text: todo, status: EStatus.TODO },
     ])
     setValue('todo', '')
   }

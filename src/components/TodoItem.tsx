@@ -1,5 +1,5 @@
 import React from 'react'
-import { ITodo } from '../atoms'
+import { EStatus, ITodo } from '../atoms'
 import { useSetRecoilState } from 'recoil'
 import { todoStateAtom } from '../atoms'
 import { cloneDeep } from 'lodash-es'
@@ -11,24 +11,24 @@ function TodoItem({ id, text, status }: ITodo) {
     setTodoState((prev) => {
       const clonedPrev = cloneDeep(prev)
       const tgtIdx = clonedPrev.findIndex((ci) => ci.id === id)
-      clonedPrev[tgtIdx].status = ev.currentTarget.name as ITodo['status']
+      clonedPrev[tgtIdx].status = ev.currentTarget.name as EStatus
       return clonedPrev
     })
   }
   return (
     <li>
       {text}
-      {status !== 'TODO' && (
+      {status !== EStatus.TODO && (
         <button name="TODO" onClick={switchStatus}>
           TODO
         </button>
       )}
-      {status !== 'DOING' && (
+      {status !== EStatus.DOING && (
         <button name="DOING" onClick={switchStatus}>
           DOING
         </button>
       )}
-      {status !== 'DONE' && (
+      {status !== EStatus.DONE && (
         <button name="DONE" onClick={switchStatus}>
           DONE
         </button>
