@@ -1,29 +1,27 @@
-import { useRecoilValue } from 'recoil'
-import { todoSelector, todoStateAtom } from '../atoms'
+import React from 'react'
+import { useRecoilValue, useRecoilState } from 'recoil'
+import { todoSelector, EStatus, currStatusAtom } from '../atoms'
 import CreateTodo from './CreateTodo'
 import TodoItem from './TodoItem'
 
 function TodoList() {
-  // const todoState = useRecoilValue(todoStateAtom)
-  const [todo, doing, done] = useRecoilValue(todoSelector)
+  const filteredTodos = useRecoilValue(todoSelector)
+  const [currStatus, setCurrStatus] = useRecoilState(currStatusAtom)
+  function onInput(ev: React.FormEvent<HTMLSelectElement>) {
+    setCurrStatus(ev.currentTarget.value as EStatus)
+  }
   return (
     <>
       <h1>To dos</h1>
       <hr />
       <CreateTodo />
+      <select value={currStatus} onInput={onInput}>
+        <option value={EStatus.TODO}>todo</option>
+        <option value={EStatus.DOING}>doing</option>
+        <option value={EStatus.DONE}>done</option>
+      </select>
       <ul>
-        <h2>Todo~</h2>
-        {todo.map((td) => (
-          <TodoItem key={td.id} {...td} />
-        ))}
-        <br />
-        <h2>Doing~</h2>
-        {doing.map((td) => (
-          <TodoItem key={td.id} {...td} />
-        ))}
-        <br />
-        <h2>Done~</h2>
-        {done.map((td) => (
+        {filteredTodos.map((td) => (
           <TodoItem key={td.id} {...td} />
         ))}
       </ul>

@@ -17,6 +17,11 @@ export const isDarkAtom = atom<boolean>({
   default: true,
 })
 
+export const currStatusAtom = atom<EStatus>({
+  key: 'currStatus',
+  default: EStatus.TODO,
+})
+
 export const todoStateAtom = atom<ITodo[]>({
   key: 'todo',
   default: [],
@@ -31,10 +36,7 @@ export const todoSelector = selector({
   key: 'todoSelector',
   get({ get }) {
     const todos = get(todoStateAtom)
-    return [
-      todos.filter((t) => t.status === EStatus.TODO),
-      todos.filter((t) => t.status === EStatus.DOING),
-      todos.filter((t) => t.status === EStatus.DONE),
-    ]
+    const currStatus = get(currStatusAtom)
+    return todos.filter((t) => t.status === currStatus)
   },
 })
