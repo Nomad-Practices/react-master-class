@@ -41,9 +41,8 @@ function Home() {
    *
    * query별 id(key)는 string[]로 표현하면 된다.
    */
-  const { isLoading, data: coins } = useQuery<ICoinInfo[]>(
-    ['coin', 'all'],
-    () => fetchAllCoins(20)
+  const { data: coins } = useQuery<ICoinInfo[]>(['coin', 'all'], () =>
+    fetchAllCoins(20)
   )
   return (
     <>

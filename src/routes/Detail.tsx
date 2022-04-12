@@ -1,21 +1,16 @@
 import {
   Outlet,
-  useLocation,
   useParams,
   Link,
   useMatch,
+  useNavigate,
 } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from 'react-query'
-import { fetchCoinDtl, fetchCoinPrice } from '../api'
+import { fetchCoinDtl } from '../api'
 import { useOutletContext } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-
-interface ILinkState {
-  state: {
-    name?: string
-  }
-}
+import { useEffect } from 'react'
 
 interface ICoinDtl {
   id: string
@@ -83,16 +78,21 @@ const Tab = styled.span<{ isActive: boolean }>`
 
 function Detail() {
   const { coinId } = useParams()
-  const { state } = useLocation() as ILinkState
+  // const { state } = useLocation() as ILinkState
   const chartMatch = useMatch('/:coinId/chart')
   const priceMatch = useMatch('/:coinId/price')
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    coinId === 'react-master-class' && navigate('/', { replace: true })
+  })
+
   /**
    * state가 정의되지 않는 경우를 대비하여 nullish colescing을 사용한다.
    * 주기적으로 백그라운드에서 실시간 데이터를 보여줄 때 유용하다.
    */
-  const { isLoading: isDtlLoading, data: coinDtl } = useQuery<ICoinDtl>(
-    ['coin', 'detail', coinId],
-    () => fetchCoinDtl(coinId ?? '')
+  const { data: coinDtl } = useQuery<ICoinDtl>(['coin', 'detail', coinId], () =>
+    fetchCoinDtl(coinId ?? '')
   )
 
   return (

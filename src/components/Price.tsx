@@ -50,7 +50,7 @@ function Price() {
   /**
    * useQuery 함수의 3번째 인자인 option으로 refetchInterval을 전달하면 지정한 ms마다 api를 호출한다.
    */
-  const { isLoading: isPriceLoading, data: coinPrice } = useQuery<ICoinPrice>(
+  const { data: coinPrice } = useQuery<ICoinPrice>(
     ['coin', 'price', coinId],
     () => fetchCoinPrice(coinId ?? '')
     // {
