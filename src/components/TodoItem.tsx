@@ -12,6 +12,7 @@ function TodoItem({ id, text, status }: ITodo) {
       const clonedPrev = cloneDeep(prev)
       const tgtIdx = clonedPrev.findIndex((ci) => ci.id === id)
       clonedPrev[tgtIdx].status = ev.currentTarget.name as EStatus
+      localStorage.setItem('todos', JSON.stringify(clonedPrev))
       return clonedPrev
     })
   }

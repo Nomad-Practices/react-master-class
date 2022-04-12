@@ -11,10 +11,12 @@ function CreateTodo() {
   const currStatus = useRecoilValue(currStatusAtom)
   const { register, handleSubmit, setValue } = useForm<IForm>()
   function onValid({ todo }: IForm) {
-    setTodoState((prev) => [
-      ...prev,
-      { id: Date.now(), text: todo, status: currStatus },
-    ])
+    const newItem = { id: Date.now(), text: todo, status: currStatus }
+    setTodoState((prev) => {
+      const ret = [...prev, newItem]
+      localStorage.setItem('todos', JSON.stringify(ret))
+      return ret
+    })
     setValue('todo', '')
   }
   return (

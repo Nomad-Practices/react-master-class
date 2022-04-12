@@ -24,7 +24,7 @@ export const currStatusAtom = atom<EStatus>({
 
 export const todoStateAtom = atom<ITodo[]>({
   key: 'todo',
-  default: [],
+  default: JSON.parse(localStorage.getItem('todos') ?? '[]'),
 })
 
 /**
