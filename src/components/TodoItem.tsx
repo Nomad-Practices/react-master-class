@@ -1,17 +1,18 @@
 import React from 'react'
-import { EStatus, ITodo } from '../atoms'
-import { useSetRecoilState } from 'recoil'
-import { todoStateAtom } from '../atoms'
+import { ITodo } from '../atoms'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { todoStateAtom, currStatusListAtom } from '../atoms'
 import { cloneDeep } from 'lodash-es'
 
 function TodoItem({ id, text, status }: ITodo) {
+  const currStatusList = useRecoilValue(currStatusListAtom)
   const setTodoState = useSetRecoilState(todoStateAtom)
   function switchStatus(ev: React.MouseEvent<HTMLButtonElement>) {
     // console.log(ev.currentTarget.name)
     setTodoState((prev) => {
       const clonedPrev = cloneDeep(prev)
       const tgtIdx = clonedPrev.findIndex((ci) => ci.id === id)
-      clonedPrev[tgtIdx].status = ev.currentTarget.name as EStatus
+      clonedPrev[tgtIdx].status = ev.currentTarget.name
       localStorage.setItem('todos', JSON.stringify(clonedPrev))
       return clonedPrev
     })
@@ -19,7 +20,7 @@ function TodoItem({ id, text, status }: ITodo) {
   return (
     <li>
       {text}
-      {status !== EStatus.TODO && (
+      {/* {status !== EStatus.TODO && (
         <button name="TODO" onClick={switchStatus}>
           TODO
         </button>
@@ -33,6 +34,14 @@ function TodoItem({ id, text, status }: ITodo) {
         <button name="DONE" onClick={switchStatus}>
           DONE
         </button>
+      )} */}
+      {currStatusList.map(
+        (cs, index) =>
+          status !== cs && (
+            <button key={index} name={cs} onClick={switchStatus}>
+              {cs}
+            </button>
+          )
       )}
     </li>
   )

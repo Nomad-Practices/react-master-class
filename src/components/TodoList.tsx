@@ -1,24 +1,35 @@
 import React from 'react'
 import { useRecoilValue, useRecoilState } from 'recoil'
-import { todoSelector, EStatus, currStatusAtom } from '../atoms'
+import { todoSelector, currStatusAtom, currStatusListAtom } from '../atoms'
 import CreateTodo from './CreateTodo'
 import TodoItem from './TodoItem'
+import AddStatus from './AddStatus'
 
 function TodoList() {
+  const currStatusList = useRecoilValue(currStatusListAtom)
   const filteredTodos = useRecoilValue(todoSelector)
   const [currStatus, setCurrStatus] = useRecoilState(currStatusAtom)
   function onInput(ev: React.FormEvent<HTMLSelectElement>) {
-    setCurrStatus(ev.currentTarget.value as EStatus)
+    setCurrStatus(ev.currentTarget.value)
   }
   return (
     <>
-      <h1>To dos</h1>
+      <h1>Add status(category)</h1>
+      <AddStatus />
       <hr />
+      <h1>Add todo</h1>
       <CreateTodo />
+      <hr />
+      <h1>Todo List</h1>
       <select value={currStatus} onInput={onInput}>
-        <option value={EStatus.TODO}>todo</option>
-        <option value={EStatus.DOING}>doing</option>
-        <option value={EStatus.DONE}>done</option>
+        <option value="" disabled>
+          choose
+        </option>
+        {currStatusList.map((cs, index) => (
+          <option key={index} value={cs}>
+            {cs}
+          </option>
+        ))}
       </select>
       <ul>
         {filteredTodos.map((td) => (

@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { currStatusAtom, EStatus, todoStateAtom } from '../atoms'
+import { currStatusAtom, todoStateAtom } from '../atoms'
 
 interface IForm {
   todo: string
@@ -19,15 +19,18 @@ function CreateTodo() {
     })
     setValue('todo', '')
   }
+  function onInvalid() {
+    alert('PLEASE WRITE STH!!')
+  }
   return (
-    <form onSubmit={handleSubmit(onValid)}>
+    <form onSubmit={handleSubmit(onValid, onInvalid)}>
       <input
         {...register('todo', {
-          required: 'please write sth',
+          validate: (val) => !!val,
         })}
         type="text"
       />
-      <button>Add</button>
+      <button>add item</button>
     </form>
   )
 }

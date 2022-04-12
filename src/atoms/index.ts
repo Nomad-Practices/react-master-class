@@ -1,15 +1,15 @@
 import { atom, selector } from 'recoil'
 
-export enum EStatus {
-  TODO = 'TODO',
-  DOING = 'DOING',
-  DONE = 'DONE',
-}
+// export enum EStatus {
+//   TODO = 'TODO',
+//   DOING = 'DOING',
+//   DONE = 'DONE',
+// }
 
 export interface ITodo {
   id: number
   text: string
-  status: EStatus
+  status: string
 }
 
 export const isDarkAtom = atom<boolean>({
@@ -17,9 +17,14 @@ export const isDarkAtom = atom<boolean>({
   default: true,
 })
 
-export const currStatusAtom = atom<EStatus>({
+export const currStatusListAtom = atom<string[]>({
+  key: 'currStatusList',
+  default: JSON.parse(localStorage.getItem('statusList') ?? '[]'),
+})
+
+export const currStatusAtom = atom<string>({
   key: 'currStatus',
-  default: EStatus.TODO,
+  default: 'TODO',
 })
 
 export const todoStateAtom = atom<ITodo[]>({
