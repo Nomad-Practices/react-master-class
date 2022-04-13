@@ -2,7 +2,7 @@ import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { darkTheme, lightTheme } from './theme'
 import { isDarkAtom } from './atoms'
 import { useRecoilValue } from 'recoil'
-import TodoList from '../notes/section5/components/TodoList'
+import TodoList from './components/TodoList'
 
 /**
  *  앱 전반에 적용할 style은 createGlobalStyle을 사용하면 된다.
@@ -39,8 +39,6 @@ body {
   font-weight: 300;
   font-family: 'Quicksand', sans-serif;
   font-family: 'Raleway', sans-serif;
-  background-color: ${(props) => props.theme.backgroundColor};
-  color: ${(props) => props.theme.accentColor};
   line-height: 1.2;
 }
 a {
