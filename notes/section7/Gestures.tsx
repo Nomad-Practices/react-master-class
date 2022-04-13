@@ -31,28 +31,12 @@ const boxVariants: Variants = {
     borderRadius: '100px',
     scale: 1,
   },
-  whileDrag: {
-    backgroundColor: 'rgba(46, 204, 113,1.0)',
-    transition: {
-      duration: 10,
-    },
-  },
 }
 
-/**
- * motion 컴포넌트에 drag props를 전달하기만 하면 된다.
- * motion 컴포넌트의 color에 transition을 부여할 때는 rgba 형식으로 지정하면 된다.
- */
 function App() {
   return (
     <Wrapper>
-      <Box
-        drag
-        variants={boxVariants}
-        whileHover="whileHover"
-        whileTap="whileTap"
-        whileDrag="whileDrag"
-      />
+      <Box variants={boxVariants} whileHover="whileHover" whileTap="whileTap" />
     </Wrapper>
   )
 }
