@@ -11,50 +11,75 @@ const Wrapper = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 `
 
 const Box = styled(motion.div)`
-  width: 400px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   background-color: rgba(255, 255, 255, 1);
-  border-radius: 40px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
   position: absolute;
   top: 100px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `
 
 const boxVariants: Variants = {
   initial: {
+    x: 500,
     opacity: 0,
+    scale: 0,
   },
   animate: {
+    x: 0,
     opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 1,
+    },
   },
   exit: {
+    x: -500,
     opacity: 0,
-    y: 20,
+    scale: 0,
+    transition: {
+      duration: 1,
+    },
   },
 }
 
 function App() {
-  const [show, setShow] = useState(false)
+  const [visible, setVisible] = useState(0)
+  function nextPlease() {
+    setVisible((prev) => (prev + 1) % 10)
+  }
+  function prevPlease() {
+    setVisible((prev) => (prev === 0 ? 9 : prev - 1))
+  }
   return (
     <Wrapper>
-      <button onClick={() => setShow((prev) => !prev)}>click</button>
-      {/**
-       * motion 컴포넌트가 React tree로부터 unmount되는 동안 animation을 정의할 수 있다.
-       * 추가적으로 exit라는 props를 전달해야 한다,
-       */}
       <AnimatePresence>
-        {show && (
-          <Box
-            variants={boxVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          />
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(
+          (n) =>
+            n == visible && (
+              <Box
+                key={n}
+                variants={boxVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                {n}
+              </Box>
+            )
         )}
       </AnimatePresence>
+      <button onClick={() => nextPlease()}>next</button>
+      <button onClick={() => prevPlease()}>prev</button>
     </Wrapper>
   )
 }
