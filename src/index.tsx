@@ -43,6 +43,7 @@ body {
   font-family: 'Quicksand', sans-serif;
   font-family: 'Raleway', sans-serif;
   line-height: 1.2;
+  background: linear-gradient(135deg, #e09, #d0e);
 }
 a {
   text-decoration:none;

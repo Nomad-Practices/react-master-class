@@ -40,7 +40,7 @@ function App() {
   const x = useMotionValue(0)
   /**
    * 특정 motionValue의 input을 일정 범위의 output motionValue으로 변환할 때는 useTransform hook을 사용하면 된다
-   * color transform도 가능하다
+   * color transform도 가능하다. 단, color 값은 rgba 형태로 작성해야 한다~~
    */
   const rotateZ = useTransform(x, [-800, 800], [360, -360])
   const gradient = useTransform(

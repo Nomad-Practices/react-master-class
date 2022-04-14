@@ -17,7 +17,6 @@ const Wrapper = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 500vh;
 `
 
 const Box = styled(motion.div)`
@@ -30,6 +29,36 @@ const Box = styled(motion.div)`
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `
 
+const Svg = styled.svg`
+  width: 300px;
+  height: 300px;
+`
+
+/**
+ * 특정 style property에 적용할 animation은 다음과 같이 transition 안에 default 값과 함께 지정하면 된다.
+ */
+const pathVariants: Variants = {
+  initial: {
+    fill: 'rgba(255, 255, 255, 0)',
+    stroke: 'white',
+    pathLength: 0,
+    strokeWidth: 2,
+    d: 'M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z',
+  },
+  animate: {
+    fill: 'rgba(255, 255, 255, 1)',
+    pathLength: 1,
+    transition: {
+      default: {
+        duration: 3,
+      },
+      fill: {
+        duration: 5,
+        delay: 3,
+      },
+    },
+  },
+}
 /**
  * 진행 중인 animation과 관련된 수치를 추적할 때는 useMotionValue hook을 사용하면 된다.
  * 여기서 useMotionValue의 반환된 데이터는 컴포넌트 render cycle을 따르지 않는다.
@@ -37,29 +66,15 @@ const Box = styled(motion.div)`
  */
 
 function App() {
-  const x = useMotionValue(0)
-  /**
-   * 특정 motionValue의 input을 일정 범위의 output motionValue으로 변환할 때는 useTransform hook을 사용하면 된다
-   * color transform도 가능하다
-   */
-  const rotateZ = useTransform(x, [-800, 800], [360, -360])
-  const gradient = useTransform(
-    x,
-    [-800, 0, 800],
-    [
-      'linear-gradient(135deg, rgb(0, 210, 238), rgb(0, 83, 238))',
-      'linear-gradient(135deg, rgb(238, 0, 153), rgb(221, 0, 238))',
-      'linear-gradient(135deg, rgb(0, 238, 155), rgb(238, 178, 0))',
-    ]
-  )
-  /**
-   * useViewportScroll을 사용하면 x, y 방향의 스크롤과 관련된 motionValue를 얻을 수 있다.
-   */
-  const { scrollY, scrollYProgress } = useViewportScroll()
-  const scale = useTransform(scrollYProgress, [0, 1], [0.1, 2])
   return (
-    <Wrapper style={{ background: gradient }}>
-      <Box style={{ x, rotateZ, scale }} drag="x" dragSnapToOrigin />
+    <Wrapper>
+      <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+        <motion.path
+          variants={pathVariants}
+          initial="initial"
+          animate="animate"
+        />
+      </Svg>
     </Wrapper>
   )
 }
