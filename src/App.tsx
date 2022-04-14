@@ -29,11 +29,11 @@ const Box = styled(motion.div)`
 `
 
 const boxVariants: Variants = {
-  initial: {
-    x: 500,
+  initial: (custom: boolean) => ({
+    x: custom ? 500 : -500,
     opacity: 0,
     scale: 0,
-  },
+  }),
   animate: {
     x: 0,
     opacity: 1,
@@ -42,28 +42,35 @@ const boxVariants: Variants = {
       duration: 1,
     },
   },
-  exit: {
-    x: -500,
+  exit: (custom: boolean) => ({
+    x: custom ? -500 : 500,
     opacity: 0,
     scale: 0,
     transition: {
       duration: 1,
     },
-  },
+  }),
 }
 
 function App() {
   const [visible, setVisible] = useState(0)
+  const [direction, setDirection] = useState(true)
   function nextPlease() {
     setVisible((prev) => (prev + 1) % 10)
+    setDirection(true)
   }
   function prevPlease() {
     setVisible((prev) => (prev === 0 ? 9 : prev - 1))
+    setDirection(false)
   }
   return (
     <Wrapper>
-      <AnimatePresence>
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(
+      {/**
+       * exitBeforeEnter props를 사용하면 unmount되는 motion 컴포넌트의 exit가 종료된 뒤에서야 새로운 motion 컴포넌트의 initial이 실행된다.
+       * 없다면 exit와 initial이 동시에 발생한다
+       */}
+      <AnimatePresence custom={direction} exitBeforeEnter>
+        {/* {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(
           (n) =>
             n == visible && (
               <Box
@@ -76,7 +83,27 @@ function App() {
                 {n}
               </Box>
             )
-        )}
+        )} */}
+        {/**
+         * React 컴포넌트의 key props만 다르게 한다면 새롭게 rendering되는, 전혀 다른 컴포넌트가 된다.
+         * 따라서 조건부 list rendering에 굳이 배열이 필요하지 않다~
+         *
+         * 컴포넌트의 variants를 동적으로 제어할 때는 custom props를 사용한다.
+         * => 여기서 AnimatePresence 컴포넌트에도 동일하게 전달해야 한다!!
+         * => 또한 개별 variant는 custom props 값을 인자, 객체를 반환하는 함수여야 한다.
+         * => 개별 컴포넌트 별로 animation에 방향성을 부여하는 것처럼 부가적인 기능을 부여할 수 있다!!
+         *
+         */}
+        <Box
+          key={visible}
+          variants={boxVariants}
+          initial="initial"
+          animate="animate"
+          custom={direction}
+          exit="exit"
+        >
+          {visible}
+        </Box>
       </AnimatePresence>
       <button onClick={() => nextPlease()}>next</button>
       <button onClick={() => prevPlease()}>prev</button>
