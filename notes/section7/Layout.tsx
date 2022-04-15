@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { motion, AnimatePresence, Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useState } from 'react'
 
 const Wrapper = styled(motion.div)`
@@ -34,16 +34,18 @@ function App() {
   function toggleClicked() {
     setClicked((prev) => !prev)
   }
-  /**
-   * 서로 다른 컴포넌트 간의 조건부 배치가 달라질 때, 컴포넌트로 동일한 layoutId를 주면 마치 하나의 컴포넌트인 것처럼 animation이 적용된다.
-   */
   return (
     <Wrapper onClick={toggleClicked}>
-      <Box>
-        {!clicked && <Circle layoutId="circle" style={{ borderRadius: 50 }} />}
-      </Box>
-      <Box>
-        {clicked && <Circle layoutId="circle" style={{ borderRadius: 0 }} />}
+      <Box
+        style={{
+          justifyContent: clicked ? 'center' : 'flex-start',
+          alignItems: clicked ? 'center' : 'flex-start',
+        }}
+      >
+        {/**
+         * css에 의해서 특정 motion 컴포넌트의 위치가 달라지는 과정에 animation을 적용할 때는 위치가 변하는 motion 컴포넌트에 layout props를 전달한다.
+         */}
+        <Circle layout />
       </Box>
     </Wrapper>
   )
