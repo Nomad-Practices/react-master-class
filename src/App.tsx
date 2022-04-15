@@ -12,8 +12,8 @@ const Wrapper = styled(motion.div)`
 
 const Box = styled(motion.div)`
   height: 200px;
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 40px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,30 +53,34 @@ const overlayVariants: Variants = {
 }
 
 function App() {
-  const [clicked, setClicked] = useState(false)
-  function toggleClicked() {
-    setClicked((prev) => !prev)
-  }
+  const [lid, setLid] = useState<number>(-1)
   /**
    * 서로 다른 컴포넌트 간의 조건부 배치가 달라질 때, 컴포넌트로 동일한 layoutId를 주면 마치 하나의 컴포넌트인 것처럼 animation이 적용된다.
    */
   return (
-    <Wrapper onClick={toggleClicked}>
+    <Wrapper>
       <Grid>
-        <Box layoutId="hello" />
-        <Box />
-        <Box />
-        <Box />
+        {[0, 1, 3, 2].map((n) => (
+          <Box key={n} layoutId={n + ''} onClick={() => setLid(n)} />
+        ))}
       </Grid>
       <AnimatePresence>
-        {clicked && (
+        {lid % 2 === 0 && (
           <Overlay
             variants={overlayVariants}
             initial="initial"
             animate="animate"
             exit="exit"
+            onClick={() => setLid(-1)}
           >
-            <Box layoutId="hello" style={{ width: 400, height: 200 }} />
+            <Box
+              layoutId={lid + ''}
+              style={{
+                width: 400,
+                height: 200,
+                backgroundColor: 'rgba(255,255,255,1)',
+              }}
+            />
           </Overlay>
         )}
       </AnimatePresence>
