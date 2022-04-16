@@ -166,10 +166,6 @@ const overlayVar: Variants = {
 function Home() {
   const navigate = useNavigate()
   const { scrollY } = useViewportScroll()
-  /**
-   * route가 특정 patter을 만족하는지 확인할 때는 useMatch를 사용한다.
-   * 반환된 객체를 통해 pattern에 일치했을 때, path parameter도 알아낼 수 있고 default string이다.
-   */
   const bigMovieMatch = useMatch('/movies/:id')
   const { data, isLoading } = useQuery(
     ['movies', 'nowPlaying'],
@@ -190,9 +186,6 @@ function Home() {
     !leaving && setIndex((prev) => (prev + 1) % boxChunks.length)
   }
   function onBoxClick(id: number) {
-    /**
-     * history stack에 route를 동적으로 push/replace할 때는 useNavigate hook을 사용한다.
-     */
     navigate(`/movies/${id}`)
   }
   return (
@@ -209,20 +202,12 @@ function Home() {
             <Overview>{data?.results?.[0].overview}</Overview>
           </Banner>
           <Slider>
-            {/**
-             * AnimatePresence 내부 motion 컴포넌트의 exit 이후에 실행할 callback은 onExitComplete props를 사용하면 된다~
-             * 또한 처음 화면에 rendering될 때 내부 motion 컴포넌트의 initial animation을 비활성화할 때는  initial props에 false로 전달하면 된다.
-             */}
             <AnimatePresence
               onExitComplete={() => {
                 setLeaving(false)
               }}
               initial={false}
             >
-              {/**
-               * motion 컴포넌트의 key props만 바꿔도 react에서는 rerendering 된다는 성질을 이용하면 슬라이더는 쉽게 만들 수 있다.
-               * 사라지려는 컴포넌트 exit을, 나타나려는 컴포넌트는 initial + animate를 실행하게 된다.
-               */}
               <Row
                 variants={rowVar}
                 initial="initial"
@@ -242,12 +227,6 @@ function Home() {
                     transition={{ type: 'tween' }}
                     onClick={() => onBoxClick(t.id)}
                   >
-                    {/**
-                     * 부모 motion 컴포넌트에서 전달한 variants는 자식 motion 컴포넌트로 상속되기 때문에
-                     * 자식 컴포넌트에서 따로 지정할 animation은 동일한 interface를 가진 variants로 전달해야 한다.
-                     * 즉, 이미 아래 컴포넌트에는 아래와 같이 초기화된 상태라고 볼 수 있다.
-                     * <Info variants={infoVar} initial="initial" whileHover="whileHover"/>
-                     */}
                     <Info variants={infoVar}>
                       <h4>{t.title}</h4>
                     </Info>

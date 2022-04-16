@@ -34,33 +34,21 @@ interface IResult {
   original_name: string
 }
 
-export interface ILatest {
-  backdrop_path: Nullable<string>
+export interface ILatest extends Omit<IResult, 'genre_ids'> {
   created_by: object[]
   episode_run_time: number[]
-  first_air_date: string
   genres: IGenre[]
   homepage: string
-  id: number
   in_production: boolean
   languages: string[]
   last_air_date: string
-  name: string
   networks: INetwork[]
   number_of_episodes: number
   number_of_seasons: number
-  origin_country: string[]
-  original_language: string
-  original_name: string
-  overview: Nullable<string>
-  popularity: number
-  poster_path: Nullable<string>
   production_companies: object[]
   seasons: ISeason[]
   status: string
   type: string
-  vote_average: number
-  vote_count: number
 }
 
 export interface IAiring {
