@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import { getMovies } from '../api'
+import { useApi } from '../api'
 import styled from 'styled-components'
 import { makeImagePath } from '../utils'
 import {
@@ -11,6 +11,7 @@ import {
 import { useState } from 'react'
 import { chunk } from 'lodash-es'
 import { useMatch, useNavigate } from 'react-router-dom'
+import { INowPlayingMv } from '../api/interfaces'
 
 const BOX_COUNT_PER_SLIDE = 6
 
@@ -170,7 +171,10 @@ function Home() {
    * 반환된 객체를 통해 pattern에 일치했을 때, path parameter도 알아낼 수 있고 default string이다.
    */
   const bigMovieMatch = useMatch('/movies/:id')
-  const { data, isLoading } = useQuery(['movies', 'nowPlaying'], getMovies)
+  const { data, isLoading } = useQuery(
+    ['movies', 'nowPlaying'],
+    useApi<Partial<INowPlayingMv>>('/movie/now_playing')
+  )
 
   const [index, setIndex] = useState(0)
   const [leaving, setLeaving] = useState(false)
