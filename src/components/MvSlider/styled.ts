@@ -4,6 +4,7 @@ import { motion, Variants } from 'framer-motion'
 export const Wrapper = styled.div`
   position: relative;
   top: -100px;
+  margin-top: 100px;
   margin-bottom: 250px;
 `
 export const Row = styled(motion.div)`
