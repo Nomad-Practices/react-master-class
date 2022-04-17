@@ -102,7 +102,7 @@ function Slider({ queryId, queryFn }: IProps) {
         <>
           <Wrapper>
             <SliderName onClick={() => increaseIndex()}>
-              {sliderNm.replace('_', ' ')}
+              {sliderNm.replace('_', ' ') + '  >>'}
             </SliderName>
             <AnimatePresence
               onExitComplete={() => {

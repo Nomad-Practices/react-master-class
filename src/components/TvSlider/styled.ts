@@ -91,4 +91,5 @@ export const SliderName = styled.h1`
   color: ${(props) => props.theme.white.lighter};
   font-size: 40px;
   font-weight: bolder;
+  cursor: pointer;
 `
