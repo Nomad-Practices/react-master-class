@@ -50,6 +50,7 @@ function Home() {
           <Loader>Loading...</Loader>
         ) : (
           <Banner bgphoto={makeImagePath(data?.backdrop_path ?? '')}>
+            The Latest
             <Title>{data?.title ?? 'Title'}</Title>
             <Overview>{data?.overview ?? 'Overview'}</Overview>
           </Banner>
