@@ -7,9 +7,9 @@ import {
   ITopRatedMv,
   IUpcomingMv,
 } from '../api/interfaces'
-import { Loader } from '../components/Slider/styled'
+import { Loader } from '../components/MvSlider/styled'
 import { makeImagePath } from '../utils/'
-import Slider from '../components/Slider'
+import MvSlider from '../components/MvSlider'
 
 const Wrapper = styled.div`
   height: 200vh;
@@ -34,7 +34,7 @@ const Overview = styled.p`
   width: 50%;
 `
 
-function HomeTest() {
+function Home() {
   const { data, isLoading } = useQuery(
     ['movies', 'latest'],
     useApi<Partial<ILatestMv>>('/movie/latest'),
@@ -54,15 +54,15 @@ function HomeTest() {
             <Overview>{data?.overview ?? 'Overview'}</Overview>
           </Banner>
         )}
-        <Slider
+        <MvSlider
           queryId="movies/Now_Playing"
           queryFn={useApi<Partial<INowPlayingMv>>('/movie/now_playing')}
         />
-        <Slider
+        <MvSlider
           queryId="movies/Top_Rated"
           queryFn={useApi<Partial<ITopRatedMv>>('/movie/top_rated')}
         />
-        <Slider
+        <MvSlider
           queryId="movies/Upcoming"
           queryFn={useApi<Partial<IUpcomingMv>>('/movie/upcoming')}
         />
@@ -71,4 +71,4 @@ function HomeTest() {
   )
 }
 
-export default HomeTest
+export default Home

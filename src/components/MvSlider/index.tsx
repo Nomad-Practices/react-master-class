@@ -17,7 +17,7 @@ import { makeImagePath } from '../../utils'
 import { useMatch, useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { chunk } from 'lodash-es'
-import { IResultMv, IResultTv } from '../../api/interfaces'
+import { IResultMv } from '../../api/interfaces'
 
 const rowVariants: Variants = {
   initial: {
@@ -86,8 +86,6 @@ function Slider({ queryId, queryFn }: IProps) {
   const boxChunks = chunk(data?.results ?? [], BOX_COUNT_PER_SLIDE)
 
   const mvMatch = useMatch('/movie/:sliderNm/:id')
-  // const tvMatch = useMatch('/tv/:id')
-  // const mvMatch = mvMatch ?? tvMatch
 
   const clickedPoster =
     mvMatch && data?.results.find((r) => `${r.id}` === mvMatch?.params.id)
@@ -120,7 +118,7 @@ function Slider({ queryId, queryFn }: IProps) {
               >
                 {boxChunks[index].map((t) => (
                   <Box
-                    layoutId={`${t.id}`}
+                    layoutId={`${t.id}-${sliderNm}`}
                     variants={boxVarinants}
                     key={t.id}
                     bgphoto={makeImagePath(t.backdrop_path ?? '', 'w500')}
@@ -150,7 +148,7 @@ function Slider({ queryId, queryFn }: IProps) {
                   onClick={() => navigate(-1)}
                 />
                 <Desc
-                  layoutId={mvMatch?.params.id ?? ''}
+                  layoutId={`${mvMatch?.params.id}-${sliderNm}`}
                   style={{ top: scrollY.get() + 50 }}
                 >
                   {clickedPoster && (
