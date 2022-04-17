@@ -45,13 +45,13 @@ function Search() {
         <Title>Search results</Title>
       </Banner>
       <MvSlider
-        queryId="movie/Search_Results"
+        queryId="movie/Related_movies"
         queryFn={useApi<Partial<IMvSearchResults>>('/search/movie', {
           query: keyword,
         })}
       />
       <TvSlider
-        queryId="tv/Search_Results"
+        queryId="tv/Related_shows"
         queryFn={useApi<Partial<ITvSearchResults>>('/search/tv', {
           query: keyword,
         })}
