@@ -4,6 +4,7 @@ import { motion, Variants } from 'framer-motion'
 export const Wrapper = styled.div`
   position: relative;
   top: -100px;
+  margin-bottom: 250px;
 `
 export const Row = styled(motion.div)`
   display: grid;
@@ -44,6 +45,7 @@ export const Overlay = styled(motion.div)`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
 `
 export const Desc = styled(motion.div)`
   position: absolute;
@@ -55,6 +57,7 @@ export const Desc = styled(motion.div)`
   background-color: ${(props) => props.theme.black.lighter};
   border-radius: 15px;
   overflow: hidden;
+  z-index: 10;
 `
 export const Cover = styled.div`
   width: 100%;
@@ -75,4 +78,16 @@ export const Overview = styled.p`
   color: ${(props) => props.theme.white.lighter};
   position: relative;
   top: -60px;
+`
+export const Loader = styled.div`
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const SliderName = styled.h1`
+  color: ${(props) => props.theme.white.lighter};
+  font-size: 40px;
+  font-weight: bolder;
 `

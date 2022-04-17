@@ -10,7 +10,7 @@ export function useApi<T>(path: string) {
       api_key: API_KEY,
     },
   }
-  async function fetchApi(): Promise<T> {
+  async function fetchApi<U extends T>(): Promise<U> {
     const { data } = await axios.get(url, config)
     return data
   }

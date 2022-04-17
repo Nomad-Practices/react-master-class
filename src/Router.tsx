@@ -10,9 +10,9 @@ function Router() {
       <Routes>
         <Route path="/" element={<GlobalLayout />}>
           <Route path="" element={<Home />} />
-          <Route path="movie/:id" element={<Home />} />
+          <Route path="movie/:sliderNm/:id" element={<Home />} />
           <Route path="tv" element={<Tv />} />
-          <Route path="tv/:id" element={<Tv />} />
+          <Route path="tv/:sliderNm/:id" element={<Tv />} />
           <Route path="search" element={<Search />} />
           <Route
             path="react-master-class"

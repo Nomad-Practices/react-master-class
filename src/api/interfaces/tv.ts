@@ -1,4 +1,4 @@
-type Nullable<T> = T | null
+import { Nullable } from './index'
 
 interface IGenre {
   id: number
@@ -18,7 +18,7 @@ interface ISeason {
   season_number: number
 }
 
-interface IResult {
+export interface IResult {
   poster_path: Nullable<string>
   popularity: string
   id: number
@@ -34,6 +34,9 @@ interface IResult {
   original_name: string
 }
 
+/**
+ * banner에 사용할 예정
+ */
 export interface ILatest extends Omit<IResult, 'genre_ids'> {
   created_by: object[]
   episode_run_time: number[]
