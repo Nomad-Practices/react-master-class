@@ -61,3 +61,4 @@ export interface ITopRated {
 }
 
 export interface IUpcoming extends ITopRated {}
+export interface IMvSearchResults extends ITopRated {}

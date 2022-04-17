@@ -63,3 +63,4 @@ export interface IAiring {
 
 export interface IPopular extends IAiring {}
 export interface ITopRated extends IAiring {}
+export interface ITvSearchResults extends IAiring {}

@@ -83,7 +83,7 @@ function Slider({ queryId, queryFn }: IProps) {
 
   const sliderNm = queryId.split('/')[1]
 
-  const boxChunks = chunk(data?.results ?? [], BOX_COUNT_PER_SLIDE)
+  const boxChunks = chunk(data?.results, BOX_COUNT_PER_SLIDE)
 
   const tvMatch = useMatch('/tv/:sliderNm/:id')
 

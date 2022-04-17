@@ -55,15 +55,15 @@ function Home() {
           </Banner>
         )}
         <MvSlider
-          queryId="movies/Now_Playing"
+          queryId="movie/Now_Playing"
           queryFn={useApi<Partial<INowPlayingMv>>('/movie/now_playing')}
         />
         <MvSlider
-          queryId="movies/Top_Rated"
+          queryId="movie/Top_Rated"
           queryFn={useApi<Partial<ITopRatedMv>>('/movie/top_rated')}
         />
         <MvSlider
-          queryId="movies/Upcoming"
+          queryId="movie/Upcoming"
           queryFn={useApi<Partial<IUpcomingMv>>('/movie/upcoming')}
         />
       </Wrapper>

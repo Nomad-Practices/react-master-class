@@ -3,10 +3,11 @@ import axios, { AxiosRequestConfig } from 'axios'
 const API_KEY = '29d98fbcec98f1a8bcaa1f270b92b641'
 const BASE_URL = 'https://api.themoviedb.org/3'
 
-export function useApi<T>(path: string) {
+export function useApi<T>(path: string, params?: object) {
   const url = BASE_URL + path
   const config: AxiosRequestConfig = {
     params: {
+      ...params,
       api_key: API_KEY,
     },
   }
